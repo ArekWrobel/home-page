@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1" meta charset="UTF-8"/>
+<link rel="icon" 
+      type="image/png" 
+      href="/img/logo.png"">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.column {
+  float: left;
+  width: 50%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 8px;
+}
+
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #474e5d;
+  color: white;
+}
+
+.container {
+  padding: 0 16px;
+}
+
+.container::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: grey;
+}
+
+.img {
+  width: 100%;
+  height: auto;
+}
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+@media screen and (max-width: 450px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+</style>
+</head>
+<body>
+<div class="about-section">
+  <h1>About Us Page</h1>
+  <p>Some text about who we are and what we do.</p>
+  <p>Resize the browser window to see that this page is responsive by the way.</p>
+</div>
+
+<h2 style="text-align:center">About me</h2>
+
+<div class="row">
+	<div class="column">
+    <div class="card">
+      <img src="/img/aw.jpg" alt="AW" style="width: 300px; height: 337px; object-fit: scale-down;"/>
+      <div class="container">
+        <h2>Arkadiusz Wróbel</h2>
+        <p class="title">CEO & Founder</p>
+        <p>Everything about IT.</p>
+        <p>arwrobel@gmail.com</p>
+        <p><button class="button" onclick="location.href='mailto:arwrobel@gmail.com';">Contact</button></p>
+      </div>
+    </div>
+  	</div>
+<div class="column">
+    <div class="card">
+      <img src="/img/help.png" alt="help" style="width: 300px; height: 337px; object-fit: scale-down;"/>
+      <div class="container">
+        <h2>Bio</h2>
+        <p class="title">More links about me</p>
+        <p><a href="http://bio.softwareveteran.pl" target="blank">Social</a></p>
+        <p><a href="http://api.softwareveteran.pl" target="blank">API</a></p>
+        <p><button class="button" onclick="location.href='mailto:arwrobel@gmail.com';">Contact</button></p>
+      </div>
+    </div>
+  	</div>
+
+</div>
+<div class="row">
+    <div class="column">
+        <div class="card">
+            <img src="/img/radar.png" alt="radar" style="width: 300px; height: 337px; object-fit: scale-down;"/>
+            <div class="container">
+                <h2>My Technology Radar</h2>
+                <p class="title">radar</p>
+                <p>Everything about IT.</p>
+
+                <p><button class="button" onclick="location.href='radar.html';">More</button></p>
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="card">
+            <img src="/img/book-icon.png" alt="hobby" style="width: 300px; height: 337px; object-fit: scale-down;"/>
+            <div class="container">
+                <h2>Hobby</h2>
+                <p class="title">books, comics, movies, tv series, biking, hiking etc.</p>
+                <p><a href="https://blog.softwareveteran.dev/" target="blank">Blog</a></p>
+                <p><button class="button" onclick="location.href='calculator.html';">Contact</button></p>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+  <div class="column">
+      <div class="card">
+       <iframe src="https://www.google.com/maps/d/embed?mid=1Ik7IWLCy_2jP3_KMgoOl4cNoFrmnfEMz&ehbc=2E312F"></iframe>
+        <div class="container">
+          <h2>KGP</h2>
+          <p class="title">TODO</p>
+          <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+
+          <p><button class="button" onclick="location.href='https://www.google.com/maps/d/viewer?mid=1Ik7IWLCy_2jP3_KMgoOl4cNoFrmnfEMz&ll=50.01858811039548%2C19.072845350000005&z=7'">More...</button></p>
+        </div>
+      </div>
+    </div>
+  
+  <div class="column">
+    <div class="card">
+		<iframe src="https://www.google.com/maps/d/embed?mid=1HqSH437kD7vZULBkgTJFaDS0mH2OTdtJ&ehbc=2E312F"></iframe>
+  		<div class="container">
+        	<h2>Vacation Plans 2022</h2>
+        	<p class="title">TODO</p>
+        	<p>Some text that describes me lorem ipsum ipsum lorem.</p>
+            <p><button class="button" onclick="location.href='https://www.google.com/maps/d/viewer?mid=1HqSH437kD7vZULBkgTJFaDS0mH2OTdtJ&ll=37.524813476593046%2C13.865735000000008&z=8'">More...</button></p>
+        </div>
+ 	</div>
+ </div>
+</div>
+  
+</body>
+</html>
+
+
+			

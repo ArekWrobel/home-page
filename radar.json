@@ -1,0 +1,445 @@
+{
+  "children": [
+    {
+      "name": "Adopt",
+      "children": [
+        {
+          "name": "SCRUM",
+          "ring": "Adopt",
+          "colname": "Techniques",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Scrum jako iteracyjne i przyrostowe ramy postępowania zgodne ze <a href =\"https://scrumguides.org/scrum-guide.html\">Scrum Guide</a> . "
+        },
+        {
+          "name": "Kanban",
+          "ring": "Adopt",
+          "colname": "Techniques",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Kanban to zwinna metodyka zarządzania przepływem pracy oraz wizualizacji procesów biznesowych"
+        },
+        {
+          "name": "Pull Requests",
+          "ring": "Adopt",
+          "colname": "Techniques",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "PR/Code Review jest jedną z najlepszych metodyk aby uzyskać kod, zrozumiały, który zadowala potrzeby użytkownika"
+        },
+        {
+          "name": "Code Review",
+          "ring": "Adopt",
+          "colname": "Techniques",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "PR/Code Review jest jedną z najlepszych metodyk aby uzyskać kod, zrozumiały, który zadowala potrzeby użytkownika"
+        },
+        {
+          "name": "ADL/ADR",
+          "ring": "Adopt",
+          "colname": "Techniques",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "ADL - zbiór dokumentów z decyzjami  architektonicznymi (ADR)"
+        },
+        {
+          "name": "Docker",
+          "ring": "Adopt",
+          "colname": "Platforms",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "K8S",
+          "ring": "Adopt",
+          "colname": "Platforms",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "Java 11+",
+          "ring": "Adopt",
+          "colname": "languages-and-frameworks",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "Spring Boot",
+          "ring": "Adopt",
+          "colname": "languages-and-frameworks",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "Spring Cloud",
+          "ring": "Adopt",
+          "colname": "languages-and-frameworks",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "JUnit 5",
+          "ring": "Adopt",
+          "colname": "languages-and-frameworks",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "Mockito",
+          "ring": "Adopt",
+          "colname": "languages-and-frameworks",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "Maven",
+          "ring": "Adopt",
+          "colname": "languages-and-frameworks",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "OpenAPI (swagger)",
+          "ring": "Adopt",
+          "colname": "languages-and-frameworks",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "SQL",
+          "ring": "Adopt",
+          "colname": "languages-and-frameworks",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "MySQL",
+          "ring": "Adopt",
+          "colname": "languages-and-frameworks",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "mongoDB",
+          "ring": "Adopt",
+          "colname": "languages-and-frameworks",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "Jenkins",
+          "ring": "Adopt",
+          "colname": "Tools",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "Helm",
+          "ring": "Adopt",
+          "colname": "Tools",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "Observability",
+          "ring": "Adopt",
+          "colname": "Tools",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "Monitoring",
+          "ring": "Adopt",
+          "colname": "Tools",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "Static Code Analysis",
+          "ring": "Adopt",
+          "colname": "Tools",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "Security",
+          "ring": "Adopt",
+          "colname": "Tools",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        }
+      ]
+    },
+    {
+      "name": "Hold",
+      "children": [
+        {
+          "name": "Apache Karaf",
+          "ring": "Hold",
+          "colname": "Platforms",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "JSP",
+          "ring": "Hold",
+          "colname": "languages-and-frameworks",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "JUnit 4",
+          "ring": "Hold",
+          "colname": "languages-and-frameworks",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "JavaFX",
+          "ring": "Hold",
+          "colname": "languages-and-frameworks",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "java 8",
+          "ring": "Hold",
+          "colname": "languages-and-frameworks",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "PowerMock",
+          "ring": "Hold",
+          "colname": "languages-and-frameworks",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "PHP",
+          "ring": "Hold",
+          "colname": "languages-and-frameworks",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "SQL Server",
+          "ring": "Hold",
+          "colname": "Platforms",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        }
+      ]
+    },
+    {
+      "name": "Trial",
+      "children": [
+        {
+          "name": "feature flags",
+          "ring": "Trial",
+          "colname": "Techniques",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "togglz, gitLab"
+        },
+        {
+          "name": "IaaC",
+          "ring": "Trial",
+          "colname": "Techniques",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "helm, terraform, ansible"
+        },
+        {
+          "name": "Spring Batch",
+          "ring": "Trial",
+          "colname": "languages-and-frameworks",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "Documentation as a Code",
+          "ring": "Trial",
+          "colname": "Tools",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "AsciiDoc PlantUML structurizr"
+        }
+      ]
+    },
+    {
+      "name": "Assess",
+      "children": [
+        {
+          "name": "BDD",
+          "ring": "Assess",
+          "colname": "Techniques",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Proces wytwórczy oprogramowania który powstał na podstawie procesu Test driven development (TDD)[1][2]. BDD to połączenie wspólnych metod i zasad TDD z cechami procesu domain-driven design (DDD) i obiektowo-zorientowanej analizy i projektowania (OOAD) w celu dostarczenia zespołom tworzącym oprogramowanie oraz zespołom zarządzającym wspólnych narzędzi umożliwiających współpracę przy tworzeniu oprogramowania"
+        },
+        {
+          "name": "AWS",
+          "ring": "Assess",
+          "colname": "Platforms",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "EKS, Fargate, Code9"
+        },
+        {
+          "name": "Kafka",
+          "ring": "Assess",
+          "colname": "languages-and-frameworks",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "Quarkus",
+          "ring": "Assess",
+          "colname": "languages-and-frameworks",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "Kafka Streams",
+          "ring": "Assess",
+          "colname": "languages-and-frameworks",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "SOLID",
+          "ring": "Assess",
+          "colname": "Techniques",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        },
+        {
+          "name": "UML",
+          "ring": "Assess",
+          "colname": "Techniques",
+          "isNew": "TRUE",
+          "group": "A",
+          "value": 28,
+
+          "description": "Opis"
+        }
+      ]
+    }
+  ],
+  "name": "CEO"
+}
