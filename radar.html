@@ -1,238 +1,401 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" meta charset="UTF-8"/>
-    <link rel="icon"
-          type="image/png"
-          href="/img/logo.png"">
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            margin: 0;
-        }
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="description" content="Tech Radar: a tool to visualize technology choices, inspire and support teams to pick the best technologies for new projects">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Zalando Tech Radar</title>
+<link rel="shortcut icon" href="https://www.zalando.de/favicon.ico">
 
-        html {
-            box-sizing: border-box;
-        }
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="radar.js"></script>
 
-        *, *:before, *:after {
-            box-sizing: inherit;
-        }
-
-        .column {
-            float: left;
-            width: 50%;
-            margin-bottom: 16px;
-            padding: 0 8px;
-        }
-
-        .card {
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            margin: 8px;
-        }
-
-        .about-section {
-            padding: 50px;
-            text-align: center;
-            background-color: #474e5d;
-            color: white;
-        }
-
-        .container {
-            padding: 0 16px;
-        }
-
-        .container::after, .row::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
-
-        .title {
-            color: grey;
-        }
-
-        .img {
-            width: 100%;
-            height: auto;
-        }
-
-        .button {
-            border: none;
-            outline: 0;
-            display: inline-block;
-            padding: 8px;
-            color: white;
-            background-color: #000;
-            text-align: center;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .button:hover {
-            background-color: #555;
-        }
-
-        @media screen and (max-width: 450px) {
-            .column {
-                width: 100%;
-                display: block;
-            }
-        }
-    </style>
+<link rel="stylesheet" href="radar.css">
 </head>
+
 <body>
-<!-- Load d3.js -->
-<script src="https://d3js.org/d3.v4.js"></script>
-<div class="about-section">
-    <h1>About Us Page</h1>
-    <p>Some text about who we are and what we do.</p>
-    <p>Resize the browser window to see that this page is responsive by the way.</p>
-</div>
 
-<h2 style="text-align:center">Technology Radar</h2>
-<!-- Create a div where the graph will take place -->
-<div class="card" id="my_dataviz"></div>
-<div class="card">
-   <p><button class="button" onclick="location.href='https://softwareveteran.dev/';">Back</button></p>
-</div>
-
+<svg id="radar"></svg>
 
 <script>
-
-    // set the dimensions and margins of the graph
-    var margin = {top: 10, right: 10, bottom: 10, left: 10},
-        width = 800 - margin.left - margin.right,
-        height = 800 - margin.top - margin.bottom;
-
-    // append the svg object to the body of the page
-    //.attr("width", width + margin.left + margin.right)
-    //.attr("height", height + margin.top + margin.bottom)
-
-    var svg = d3.select("#my_dataviz")
-        .append("svg")
-        .attr("id","chart")
-        .attr("preserveAspectRatio", "xMidYMid")
-        .attr("viewBox", "0 0 "+ width + " " + height)
-        .append("g")
-        .attr("transform",
-            "translate(" + margin.left + "," + margin.top + ")");
-
-    // read json data
-    d3.json("radar.json", function(data) {
-
-        // Give the data to this cluster layout:
-        var root = d3.hierarchy(data).sum(function(d){ return d.value}) // Here the size of each leave is given in the 'value' field in input data
-
-        // Then d3.treemap computes the position of each element of the hierarchy
-        d3.treemap()
-            .size([width, height])
-            .paddingTop(28)
-            .paddingRight(7)
-            .paddingInner(3)      // Padding between each rectangle
-            //.paddingOuter(6)
-            //.padding(20)
-            (root)
-
-        // prepare a color scale
-        var color = d3.scaleOrdinal()
-            .domain(["Asses", "Trial", "Hold", "Adopt"])
-            .range([ "#00FF1A", "#005699", "#FF0000", "#8FD175"])
-
-        // And a opacity scale
-        var opacity = d3.scaleLinear()
-            .domain([10, 30])
-            .range([.5,1])
-
-        var tooltip = d3
-            .select('body')
-            .append('div')
-            .style('position', 'absolute')
-            .style('z-index', '10')
-            .style('visibility', 'hidden')
-            .style('background-color', 'white')
-            .style('border', 'solid')
-            .style('border-width', '2px')
-            .style('border-radius', '5px')
-            .style('padding', '5px')
-            .text('Empty');
-
-        // use this information to add rectangles:
-        svg
-            .selectAll("rect")
-            .data(root.leaves())
-            .enter()
-            .append("rect")
-            .attr('x', function (d) { return d.x0; })
-            .attr('y', function (d) { return d.y0; })
-            .attr('width', function (d) { return d.x1 - d.x0; })
-            .attr('height', function (d) { return d.y1 - d.y0; })
-            .style("stroke", "black")
-            .style("fill", function(d){ return color(d.parent.data.name)} )
-            .style("opacity", function(d){ return opacity(d.data.value)})
-
-        // and to add the text labels
-        svg
-            .selectAll("text")
-            .data(root.leaves())
-            .enter()
-            .append("text")
-            .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
-            .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
-            .text(function(d){ return d.data.name })
-            .attr("font-size", "12px")
-            .attr("fill", "white")
-            .on('mouseover', function(d) {
-                tooltip.html('<p>' + d.data.colname + '</p><br>'
-                + d.data.description);
-                console.log('clicked');
-                return tooltip.style('visibility', 'visible');
-            })
-            .on('mousemove', function() {
-                return tooltip
-                    .style('top', d3.event.pageY - 10 + 'px')
-                    .style('left', d3.event.pageX + 10 + 'px');
-            })
-            .on('mouseout', function() {
-                return tooltip.style('visibility', 'hidden');
-            })
-
-
-        // and to add the text labels
-        // svg
-        //     .selectAll("vals")
-        //     .data(root.leaves())
-        //     .enter()
-        //     .append("xhtml:div")
-        //     .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
-        //     .attr("y", function(d){ return d.y0+50})    // +20 to adjust position (lower)
-        //     .attr("font-size", "11px")
-        //     .style("overflow-y", "auto")
-        //     .html(function(d){ return d.data.description })
-        //     .attr("fill", "white")
-
-        // Add title for the 3 groups
-        svg
-            .selectAll("titles")
-            .data(root.descendants().filter(function(d){return d.depth==1}))
-            .enter()
-            .append("text")
-            .attr("x", function(d){ return d.x0})
-            .attr("y", function(d){ return d.y0+21})
-            .text(function(d){ return d.data.name })
-            .attr("font-size", "19px")
-            .attr("fill",  function(d){ return color(d.data.name)} )
-
-        // Add title for the 3 groups
-       // svg
-       //     .append("text")
-       //     .attr("x", 0)
-       //     .attr("y", 14)    // +20 to adjust position (lower)
-       //     .text("Technology Radar")
-       //     .attr("font-size", "19px")
-       //     .attr("fill",  "grey" )
-
-    })
+radar_visualization({
+  svg_id: "radar",
+  width: 1450,
+  height: 1000,
+  colors: {
+    background: "#fff",
+    grid: '#dddde0',
+    inactive: "#ddd"
+  },
+  title: "Arek Tech Radar",
+  date: "2023.06",
+  quadrants: [
+    { name: "Languages" },
+    { name: "Techniques" },
+    { name: "Platforms" },
+    { name: "Tools" },
+  ],
+  rings: [
+    { name: "ADOPT", color: "#5ba300" },
+    { name: "TRIAL", color: "#009eb0" },
+    { name: "ASSESS", color: "#c7ba00" },
+    { name: "HOLD", color: "#e09b96" }
+  ],
+  print_layout: true,
+  links_in_new_tabs: true,
+  // zoomed_quadrant: 0,
+  //ENTRIES
+  entries: [
+      {
+        "quadrant": 1,
+        "ring": 0,
+        "label": "SCRUM",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 1,
+        "ring": 0,
+        "label": "Kanban",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 1,
+        "ring": 0,
+        "label": "Pull Requests",
+        "link": "https://blog.softwareveteran.dev/2022/12/review-codu-co-zyskujesz-co-tracisz.html",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 1,
+        "ring": 0,
+        "label": "Code Review",
+        "link": "https://blog.softwareveteran.dev/2022/12/review-codu-co-zyskujesz-co-tracisz.html",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 1,
+        "ring": 0,
+        "label": "ADR/ADL",
+        "link": "https://blog.softwareveteran.dev/2023/02/architekt-oprogramowania-jakosc-022.htmll",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 2,
+        "ring": 0,
+        "label": "Docker",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 1,
+        "ring": 0,
+        "label": "Kubernetes",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 0,
+        "ring": 0,
+        "label": "Java 11+",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 0,
+        "ring": 0,
+        "label": "Spring Boot",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 0,
+        "ring": 0,
+        "label": "Spring Cloud",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 0,
+        "ring": 0,
+        "label": "JUnit 5",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 0,
+        "ring": 0,
+        "label": "Mockito",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 0,
+        "ring": 0,
+        "label": "Maven",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 0,
+        "ring": 0,
+        "label": "Open API 3.0",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 0,
+        "ring": 0,
+        "label": "SQL",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 2,
+        "ring": 0,
+        "label": "MySQL",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 2,
+        "ring": 0,
+        "label": "MongoDB",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 3,
+        "ring": 0,
+        "label": "Jenkins",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 3,
+        "ring": 0,
+        "label": "Helm",
+        "active": true,
+        "moved": 1
+      },
+      {
+        "quadrant": 3,
+        "ring": 0,
+        "label": "Observability",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 3,
+        "ring": 0,
+        "label": "Monitoring",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 3,
+        "ring": 0,
+        "label": "Static Code Analysis",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 3,
+        "ring": 0,
+        "label": "Security",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 2,
+        "ring": 3,
+        "label": "Apache Karaf",
+        "link": "https://engineering.zalando.com/tags/elasticsearch.html",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 0,
+        "ring": 2,
+        "label": "JSP",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 0,
+        "ring": 3,
+        "label": "JUnit 4",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 0,
+        "ring": 3,
+        "label": "JavaFX",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 0,
+        "ring": 3,
+        "label": "Java 8",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 0,
+        "ring": 3,
+        "label": "PowerMock",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 0,
+        "ring": 3,
+        "label": "PHP",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 2,
+        "ring": 3,
+        "label": "SQL Server",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 2,
+        "ring": 3,
+        "label": "Oracle DB",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 1,
+        "ring": 1,
+        "label": "Feature Flags",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 1,
+        "ring": 1,
+        "label": "IaaC",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 0,
+        "ring": 1,
+        "label": "Spring Batch",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 3,
+        "ring": 1,
+        "label": "Documentation as a Code",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 1,
+        "ring": 2,
+        "label": "BDD",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 2,
+        "ring": 2,
+        "label": "AWS",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 2,
+        "ring": 2,
+        "label": "Apache Kafka",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 0,
+        "ring": 2,
+        "label": "Quarkus",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 0,
+        "ring": 2,
+        "label": "Kafka Streams",
+        "active": true,
+        "moved": 1
+      },
+      {
+        "quadrant": 1,
+        "ring": 2,
+        "label": "SOLID",
+        "active": true,
+        "moved": 0
+      },
+      {
+        "quadrant": 1,
+        "ring": 2,
+        "label": "UML",
+        "active": true,
+        "moved": 0
+      }
+    ]
+  //ENTRIES
+});
 </script>
+
+<table>
+<tr>
+<td>
+
+<h3>What is the Tech Radar?</h3>
+
+<p>
+Tech Radar is a list of technologies, complemented by an assessment result, called <em>ring assignment</em>. We use four rings with the following semantics:
+</p>
+
+<ul>
+<li><strong>ADOPT</strong> &mdash; Technologies we have high confidence in to serve our purpose, also in large scale. Technologies with a usage culture in our Zalando production environment, low risk and recommended to be widely used.</li>
+<li><strong>TRIAL</strong> &mdash; Technologies that we have seen work with success in project work to solve a real problem; first serious usage experience that confirm benefits and can uncover limitations. TRIAL technologies are slightly more risky; some engineers in our organization walked this path and will share knowledge and experiences.</li>
+<li><strong>ASSESS</strong> &mdash; Technologies that are promising and have clear potential value-add for us; technologies worth to invest some research and prototyping efforts in to see if it has impact. ASSESS technologies have higher risks; they are often brand new and highly unproven in our organisation. You will find some engineers that have knowledge in the technology and promote it, you may even find teams that have started a prototyping effort.</li>
+<li><strong>HOLD</strong> &mdash; Technologies not recommended to be used for new projects. Technologies that we think are not (yet) worth to (further) invest in. HOLD technologies should not be used for new projects, but usually can be continued for existing projects.</li>
+</ul>
+
+</td><td>
+
+<h3>What is the purpose?</h3>
+
+<p>
+    Tech Radar serves as an inspiring and supportive tool for selecting the optimal technologies for new projects. It fosters knowledge sharing, facilitates reflection on technology decisions, and promotes the continuous evolution of my technology landscape. Based on on the <a href="https://www.thoughtworks.com/radar">pioneering work of ThoughtWorks</a>, my  Tech Radar highlights noteworthy changes in software development technologies that I recommend during the work whith my customers.
+
+</p>
+
+<h3>How do I maintain it?</h3>
+
+<p>
+The Tech Radar is maintained by <em>me Engineers</em> &mdash; who facilitate and drive the technology selection discussions at Zalando across the Engineering Community. Assignment of technologies to rings is the outcome of ring change proposals, which are discussed and voted on. The Tech Radar is open for contribution for all Engineering teams at Zalando and depends on their active participation to share lessons learned, pitfalls, and contribute to good practices on using the technologies.<br/>
+</p>
+
+<p>
+Check out my <a href="https://blog.softwareveteran.dev/"> Blog</a> for more information on how I approach Technology Selection and use the Tech Radar.
+</p>
+
+
+</td></tr>
+</table>
+
 </body>
 </html>
