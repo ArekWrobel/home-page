@@ -1,0 +1,44 @@
+// create html template to get the book id from user
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+</head>
+
+<body>
+    // create a form to get the book id from user and run function getBookInfo on submit
+    <h1>Kindle Book Info</h1>
+    <p>Enter the book id to get the book info</p>
+    <p>Book id can be found in the url of the book page</p>
+    <p>For example, the book id of https://kindle.amazon.com/api/book/123456789 is 123456789</p>
+    <p>Book id is a 9 digit number</p>
+    <p>Book id is unique for each book</p>
+    <p>Book id is not the same as ASIN</p>
+    <p>Book id is not the same as ISBN</p>
+
+
+    
+    
+    <form action="" method="GET" onsubmit="getBookInfo">
+        <p>Book ID: <input type="text" name="bookId"></p>
+        <p><input type="submit" value="Submit"></p>
+    </form>
+    <script>
+        function doGet(e) {
+            var bookId = e.parameter.bookId;
+            var bookInfo = getBookInfo(bookId);
+            return ContentService.createTextOutput(bookInfo);
+        }
+        // write a function that connect to kindle insight API
+        // and return the book info
+        function getBookInfo(bookId) {
+            var url = "https://kindle.amazon.com/api/book/" + bookId;
+            var response = UrlFetchApp.fetch(url);
+            var bookInfo = JSON.parse(response.getContentText());
+            return bookInfo;
+        }
+    </script>
+</body>
+
+</html>

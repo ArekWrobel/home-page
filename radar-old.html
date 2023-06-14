@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" meta charset="UTF-8"/>
+    <link rel="icon"
+          type="image/png"
+          href="/img/logo.png"">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+        }
+
+        html {
+            box-sizing: border-box;
+        }
+
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+
+        .column {
+            float: left;
+            width: 50%;
+            margin-bottom: 16px;
+            padding: 0 8px;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: 8px;
+        }
+
+        .about-section {
+            padding: 50px;
+            text-align: center;
+            background-color: #474e5d;
+            color: white;
+        }
+
+        .container {
+            padding: 0 16px;
+        }
+
+        .container::after, .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .title {
+            color: grey;
+        }
+
+        .img {
+            width: 100%;
+            height: auto;
+        }
+
+        .button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+
+        @media screen and (max-width: 450px) {
+            .column {
+                width: 100%;
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+<div class="about-section">
+    <h1>About Us Page</h1>
+    <p>Some text about who we are and what we do.</p>
+    <p>Resize the browser window to see that this page is responsive by the way.</p>
+</div>
+
+<h2 style="text-align:center">Technology Radar</h2>
+<!-- Create a div where the graph will take place -->
+<div class="card" id="my_dataviz"></div>
+<div class="card">
+   <p><button class="button" onclick="location.href='https://softwareveteran.dev/';">Back</button></p>
+</div>
+
+
+<script>
+
+    // set the dimensions and margins of the graph
+    var margin = {top: 10, right: 10, bottom: 10, left: 10},
+        width = 800 - margin.left - margin.right,
+        height = 800 - margin.top - margin.bottom;
+
+    // append the svg object to the body of the page
+    //.attr("width", width + margin.left + margin.right)
+    //.attr("height", height + margin.top + margin.bottom)
+
+    var svg = d3.select("#my_dataviz")
+        .append("svg")
+        .attr("id","chart")
+        .attr("preserveAspectRatio", "xMidYMid")
+        .attr("viewBox", "0 0 "+ width + " " + height)
+        .append("g")
+        .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
+
+    // read json data
+    d3.json("radar.json", function(data) {
+
+        // Give the data to this cluster layout:
+        var root = d3.hierarchy(data).sum(function(d){ return d.value}) // Here the size of each leave is given in the 'value' field in input data
+
+        // Then d3.treemap computes the position of each element of the hierarchy
+        d3.treemap()
+            .size([width, height])
+            .paddingTop(28)
+            .paddingRight(7)
+            .paddingInner(3)      // Padding between each rectangle
+            //.paddingOuter(6)
+            //.padding(20)
+            (root)
+
+        // prepare a color scale
+        var color = d3.scaleOrdinal()
+            .domain(["Asses", "Trial", "Hold", "Adopt"])
+            .range([ "#00FF1A", "#005699", "#FF0000", "#8FD175"])
+
+        // And a opacity scale
+        var opacity = d3.scaleLinear()
+            .domain([10, 30])
+            .range([.5,1])
+
+        var tooltip = d3
+            .select('body')
+            .append('div')
+            .style('position', 'absolute')
+            .style('z-index', '10')
+            .style('visibility', 'hidden')
+            .style('background-color', 'white')
+            .style('border', 'solid')
+            .style('border-width', '2px')
+            .style('border-radius', '5px')
+            .style('padding', '5px')
+            .text('Empty');
+
+        // use this information to add rectangles:
+        svg
+            .selectAll("rect")
+            .data(root.leaves())
+            .enter()
+            .append("rect")
+            .attr('x', function (d) { return d.x0; })
+            .attr('y', function (d) { return d.y0; })
+            .attr('width', function (d) { return d.x1 - d.x0; })
+            .attr('height', function (d) { return d.y1 - d.y0; })
+            .style("stroke", "black")
+            .style("fill", function(d){ return color(d.parent.data.name)} )
+            .style("opacity", function(d){ return opacity(d.data.value)})
+
+        // and to add the text labels
+        svg
+            .selectAll("text")
+            .data(root.leaves())
+            .enter()
+            .append("text")
+            .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+            .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+            .text(function(d){ return d.data.name })
+            .attr("font-size", "12px")
+            .attr("fill", "white")
+            .on('mouseover', function(d) {
+                tooltip.html('<p>' + d.data.colname + '</p><br>'
+                + d.data.description);
+                console.log('clicked');
+                return tooltip.style('visibility', 'visible');
+            })
+            .on('mousemove', function() {
+                return tooltip
+                    .style('top', d3.event.pageY - 10 + 'px')
+                    .style('left', d3.event.pageX + 10 + 'px');
+            })
+            .on('mouseout', function() {
+                return tooltip.style('visibility', 'hidden');
+            })
+
+
+        // and to add the text labels
+        // svg
+        //     .selectAll("vals")
+        //     .data(root.leaves())
+        //     .enter()
+        //     .append("xhtml:div")
+        //     .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+        //     .attr("y", function(d){ return d.y0+50})    // +20 to adjust position (lower)
+        //     .attr("font-size", "11px")
+        //     .style("overflow-y", "auto")
+        //     .html(function(d){ return d.data.description })
+        //     .attr("fill", "white")
+
+        // Add title for the 3 groups
+        svg
+            .selectAll("titles")
+            .data(root.descendants().filter(function(d){return d.depth==1}))
+            .enter()
+            .append("text")
+            .attr("x", function(d){ return d.x0})
+            .attr("y", function(d){ return d.y0+21})
+            .text(function(d){ return d.data.name })
+            .attr("font-size", "19px")
+            .attr("fill",  function(d){ return color(d.data.name)} )
+
+        // Add title for the 3 groups
+       // svg
+       //     .append("text")
+       //     .attr("x", 0)
+       //     .attr("y", 14)    // +20 to adjust position (lower)
+       //     .text("Technology Radar")
+       //     .attr("font-size", "19px")
+       //     .attr("fill",  "grey" )
+
+    })
+</script>
+</body>
+</html>
