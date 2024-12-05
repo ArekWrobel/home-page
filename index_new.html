@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="/img/logo.png">
+  <link rel="stylesheet" href="index_new.css">
+  <script src="index_new.js" defer></script>
+  <title>Arkadiusz Wróbel - Professional Services</title>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-container">
+      <h1>Arkadiusz Wróbel</h1>
+      <nav data-lang="en">
+        <ul>
+          <li><a href="#about">About Me</a></li>
+          <li><a href="#media">Media</a></li>
+          <li><a href="#radar">Technology Radar</a></li>
+          <li><a href="#offer">Offer</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <nav data-lang="pl">
+        <ul>
+          <li><a href="#about">O mnie</a></li>
+          <li><a href="#media">Media</a></li>
+          <li><a href="#radar">Technology Radar</a></li>
+          <li><a href="#offer">Oferta</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#contact">Kontakt</a></li>
+        </ul>
+      </nav>
+      <div class="language-switch">
+        <select id="language-select">
+          <option value="en" selected>🇬🇧 English</option>
+          <option value="pl">🇵🇱 Polski</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <!-- About Me Section (English) -->
+  <div class="about-section" id="about" data-lang="en">
+    <h1>About Me</h1>
+    <p>Arkadiusz Wróbel</p>
+    <p>I specialize in providing consulting, auditing, and training services for IT production processes. My experience helps to optimize workflows, ensure compliance, and empower your workforce for software craftsmanship excellence.</p>
+  </div>
+
+  <!-- About Me Section (Polish) -->
+  <div class="about-section" id="about" data-lang="pl">
+    <h1>O mnie</h1>
+    <p>Arkadiusz Wróbel</p>
+    <p>Specjalizuję się w świadczeniu usług konsultingowych, audytorskich i szkoleniowych dla procesów produkcji IT. Moje doświadczenie pomaga optymalizować przepływy pracy, zapewniać zgodność oraz wzmacniać umiejętności zespołów w zakresie doskonałości wytwarzania oprogramowania.</p>
+  </div>
+
+  <!-- Media Section -->
+  <div class="media-section" id="media" data-lang="en">
+    <h1>Media</h1>
+    <p>More links about me:</p>
+    <p><a href="http://bio.softwareveteran.pl" target="_blank">Social</a></p>
+    <p><a href="http://api.softwareveteran.pl" target="_blank">API</a></p>
+  </div>
+  <div class="media-section" id="media" data-lang="pl">
+    <h1>Media</h1>
+    <p>Więcej linków o mnie:</p>
+    <p><a href="http://bio.softwareveteran.pl" target="_blank">Społecznościowe</a></p>
+    <p><a href="http://api.softwareveteran.pl" target="_blank">API</a></p>
+  </div>
+
+  <!-- Technology Radar Section -->
+  <div class="radar-section" id="radar" data-lang="en">
+    <h1>Technology Radar</h1>
+    <p>Check out my Technology Radar that highlights noteworthy changes in software development technologies:</p>
+    <button class="button" onclick="location.href='radar.html';">Explore Radar</button>
+  </div>
+  <div class="radar-section" id="radar" data-lang="pl">
+    <h1>Technologiczny Radar</h1>
+    <p>Zapoznaj się z moim Technologicznym Radarem, który pokazuje zmiany w technologiach programistycznych:</p>
+    <button class="button" onclick="location.href='radar.html';">Zobacz Radar</button>
+  </div>
+
+  <!-- Offer Section -->
+  <div class="offer-section" id="offer">
+    <h1 data-lang="en">Business Offer</h1>
+    <h1 data-lang="pl">Oferta Biznesowa</h1>
+    <div class="offer-container">
+      <div class="offer-card">
+        <img src="https://via.placeholder.com/300x150" alt="PlantUML Workshop">
+        <h2 data-lang="en">Designing UML Diagrams in PlantUML</h2>
+        <h2 data-lang="pl">Projektowanie Diagramów UML w PlantUML</h2>
+        <p data-lang="en">Workshops to help you efficiently design and document UML diagrams using PlantUML.</p>
+        <p data-lang="pl">Warsztaty pomagające efektywnie projektować i dokumentować diagramy UML z użyciem PlantUML.</p>
+        <button class="button contact-offer">Contact Me</button>
+      </div>
+      <div class="offer-card">
+        <img src="https://via.placeholder.com/300x150" alt="C4 Model">
+        <h2 data-lang="en">Model C4 in Structurizr</h2>
+        <h2 data-lang="pl">Model C4 w Structurizr</h2>
+        <p data-lang="en">Hands-on sessions to create and document architecture models using C4 in Structurizr.</p>
+        <p data-lang="pl">Praktyczne sesje do tworzenia i dokumentowania modeli architektury z wykorzystaniem C4 w Structurizr.</p>
+        <button class="button contact-offer">Contact Me</button>
+      </div>
+      <div class="offer-card">
+        <img src="https://via.placeholder.com/300x150" alt="Arc42 Workshop">
+        <h2 data-lang="en">Architecture Documentation with Arc42 Template</h2>
+        <h2 data-lang="pl">Dokumentacja Architektury z Szablonem Arc42</h2>
+        <p data-lang="en">Workshops focusing on how to document software architecture effectively using the Arc42 template.</p>
+        <p data-lang="pl">Warsztaty skoncentrowane na efektywnej dokumentacji architektury oprogramowania z użyciem szablonu Arc42.</p>
+        <button class="button contact-offer">Contact Me</button>
+      </div>
+      <div class="offer-card">
+        <img src="https://via.placeholder.com/300x150" alt="Bundle Offer">
+        <h2 data-lang="en">Bundle Offer</h2>
+        <h2 data-lang="pl">Pakiet Ofertowy</h2>
+        <p data-lang="en">All the above services bundled together for comprehensive architecture guidance and training.</p>
+        <p data-lang="pl">Wszystkie powyższe usługi w jednym pakiecie dla kompleksowego wsparcia w zakresie architektury i szkoleń.</p>
+        <button class="button contact-offer">Contact Me</button>
+      </div>
+      <div class="offer-card">
+        <img src="https://via.placeholder.com/300x150" alt="SDLC Process Design">
+        <h2 data-lang="en">Design SDLC Process in Your Team</h2>
+        <h2 data-lang="pl">Projektowanie Procesu SDLC w Twoim Zespole</h2>
+        <p data-lang="en">Consultation to establish or improve the Software Development Lifecycle (SDLC) process for your development team.</p>
+        <p data-lang="pl">Konsultacja w celu ustalenia lub ulepszenia procesu życia oprogramowania (SDLC) w Twoim zespole deweloperskim.</p>
+        <button class="button contact-offer">Contact Me</button>
+      </div>
+      <div class="offer-card">
+        <img src="https://via.placeholder.com/300x150" alt="Individual Sessions">
+        <h2 data-lang="en">Individual Sessions</h2>
+        <h2 data-lang="pl">Sesje Indywidualne</h2>
+        <p data-lang="en">One-on-one sessions tailored to address specific challenges and goals related to software architecture and IT processes.</p>
+        <p data-lang="pl">Sesje jeden na jeden dopasowane do konkretnych wyzwań i celów związanych z architekturą oprogramowania i procesami IT.</p>
+        <button class="button contact-offer">Contact Me</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Blog Section -->
+  <div class="blog-section" id="blog">
+    <h1 data-lang="en">Latest Blog Posts</h1>
+    <h1 data-lang="pl">Najnowsze Wpisy na Blogu</h1>
+    <div class="blog-container" id="blog-container">
+      <!-- Dynamic blog posts will be inserted here -->
+    </div>
+    <button class="button" onclick="location.href='https://blog.softwareveteran.dev/';">Visit Blog</button>
+  </div>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <div class="footer-container">
+      <p>Arkadiusz Wróbel</p>
+      <p>Contact Number: +48 123 456 789</p>
+      <p>Address: Main Street 123, 00-001 Warsaw, Poland</p>
+      <p>Tax Number: PL1234567890</p>
+      <p>Email: <a href="mailto:arwrobel@gmail.com">arwrobel@gmail.com</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>
