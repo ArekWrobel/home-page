@@ -9,8 +9,66 @@ header {
   background-color: #007bff;
   color: white;
   padding: 10px 20px;
+}
+
+.nav-container {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically on mobile */
+  align-items: center;
   text-align: center;
 }
+
+.nav-container h1 {
+  margin: 0;
+  font-size: 24px;
+  text-align: center;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+nav ul li {
+  display: inline;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+nav ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.language-switch {
+  margin-top: 10px;
+}
+
+.language-switch select {
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: white;
+  color: #007bff;
+  border: none;
+}
+
+/* header {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+} 
 
 .nav-container {
   display: flex;
@@ -42,6 +100,7 @@ nav ul li a {
   padding: 8px;
   border-radius: 4px;
 }
+*/
 
 .about-section, .media-section, .radar-section, .offer-section, .blog-section {
   padding: 50px;
@@ -51,6 +110,17 @@ nav ul li a {
   border-radius: 8px;
   margin: 20px auto;
   max-width: 1000px;
+}
+
+.media-section img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover; /* Ensures the image covers the entire box without distortion */
+  border-radius: 8px; /* Optional: Rounded corners */
+  margin-bottom: 16px; /* Space between the image and text below */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .offer-container, .blog-container {
@@ -123,8 +193,65 @@ footer a {
   text-decoration: none;
 }
 
-@media screen and (max-width: 600px) {
+/* @media screen and (max-width: 600px) {
   .offer-card, .blog-card {
     width: 100%;
+  }
+} */
+
+/* Common container styling for cards (e.g., blog-card, offer-card) */
+.blog-card, .offer-card {
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  justify-content: space-between; /* Push content apart with the button at the bottom */
+  height: 400px; /* Fixed height for all cards */
+  max-width: 300px; /* Ensure consistent width */
+  padding: 16px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin: 16px;
+  position: relative; /* Enable precise positioning of child elements */
+  text-align: left;
+}
+
+/* Button styling */
+.button {
+  border: none;
+  outline: 0;
+  padding: 10px 16px;
+  color: white;
+  background-color: #007bff;
+  text-align: center;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 4px;
+  align-self: flex-start; /* Align to the left of the container */
+  margin-top: auto; /* Push the button to the bottom */
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+/* Image styling within cards */
+.blog-card img, .offer-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover; /* Ensure the image covers the area without distortion */
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.blog-card {
+  min-height: 800px; /* Increased minimum height for blogs */
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 600px) {
+  .blog-card, .offer-card {
+    max-width: 100%; /* Allow full-width cards on small screens */
+    height: auto; /* Allow cards to adjust height for responsiveness */
   }
 }
