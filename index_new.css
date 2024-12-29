@@ -1,3 +1,22 @@
+.error-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.error-page img {
+  max-width: 65%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.error-page button {
+  align-self: center;
+}
+
 body {
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
   background-color: #f8f9fa;
@@ -6,7 +25,7 @@ body {
 }
 
 header {
-  background-color: #007bff;
+  background-color: #1131d1;/* #007bff;*/
   color: white;
   padding: 10px 20px;
 }
@@ -16,6 +35,13 @@ header {
   flex-direction: column; /* Stack elements vertically on mobile */
   align-items: center;
   text-align: center;
+}
+
+.logo {
+  height: 50px; /* Adjust the height as needed */
+  width: 50px; /* Adjust the width as needed */
+  margin-right: 20px; /* Adjust the margin as needed */
+  vertical-align: middle;
 }
 
 .nav-container h1 {
@@ -63,45 +89,6 @@ nav ul li a:hover {
   border: none;
 }
 
-/* header {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-} 
-
-.nav-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-nav ul {
-  list-style-type: none;
-  padding: 0;
-  display: flex;
-  gap: 20px;
-}
-
-nav ul li {
-  display: inline;
-}
-
-nav ul li a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.language-switch select {
-  font-size: 16px;
-  padding: 8px;
-  border-radius: 4px;
-}
-*/
-
 .about-section, .media-section, .radar-section, .offer-section, .blog-section {
   padding: 50px;
   text-align: center;
@@ -141,6 +128,26 @@ nav ul li a {
   background-color: #ffffff;
   text-align: left;
 }
+
+.soon {
+  opacity: 0.5; /* Make the card semi-transparent */
+  pointer-events: none; /* Disable interactions */
+}
+
+.soon::after {
+  content: "Coming Soon"; 
+  position: absolute;
+  top: 67px;
+  right: -5px;
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 3px;
+  transform: rotate(45deg); 
+  transform-origin: top right; 
+} 
 
 .button {
   border: none;
@@ -255,3 +262,5 @@ footer a {
     height: auto; /* Allow cards to adjust height for responsiveness */
   }
 }
+
+

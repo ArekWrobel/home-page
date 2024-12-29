@@ -1,14 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
     // JavaScript to switch between languages (Polish and English)
     const languageSelect = document.getElementById("language-select");
-    const currentLanguage = languageSelect.value;
+    let currentLanguage = 'pl'; // Default to 'pl'
+
+    if (languageSelect) {
+        currentLanguage = languageSelect.value;
+        languageSelect.addEventListener("change", function () {
+            const currentLanguage = languageSelect.value;
+            document.querySelectorAll("[data-lang]").forEach((element) => {
+                element.style.display = element.dataset.lang === currentLanguage ? "block" : "none";
+            });
+        });
+    }
   
-    languageSelect.addEventListener("change", function () {
-      const currentLanguage = languageSelect.value;
-      document.querySelectorAll("[data-lang]").forEach((element) => {
-        element.style.display = element.dataset.lang === currentLanguage ? "block" : "none";
-      });
-    });
   
     function toggleLanguage(lang) {
         // document.querySelectorAll('[data-lang=\'${lang}']').forEach((el) => (el.style.display = "none"));
@@ -30,13 +34,13 @@ document.addEventListener("DOMContentLoaded", function () {
     // Add "contact me" mailto link for each business offer
     document.querySelectorAll(".contact-offer").forEach((button) => {
       button.addEventListener("click", function () {
-        const subject = encodeURIComponent("Business Offer Inquiry");
+        const subject = encodeURIComponent(button.getAttribute("data-subject"));
         window.location.href = `mailto:arwrobel@gmail.com?subject=${subject}`;
       });
     });
   
 // Fetch and display the latest blog posts from RSS feed
-fetch("https://cors-anywhere.herokuapp.com/https://praktycznyblogprogramisty.blogspot.com/feeds/posts/default?alt=rss")
+fetch("https://blog.softwareveteran.dev/feeds/posts/default?alt=rss")
 .then((response) => response.text())
 .then((str) => {
   const parser = new DOMParser();
