@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+  
     // JavaScript to switch between languages (Polish and English)
     const languageSelect = document.getElementById("language-select");
     let currentLanguage = 'pl'; // Default to 'pl'
@@ -13,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
   
-  
+
     function toggleLanguage(lang) {
         // document.querySelectorAll('[data-lang=\'${lang}']').forEach((el) => (el.style.display = "none"));
 
@@ -105,8 +106,5 @@ function getFirstThreeSentences(content) {
     const imgElement = doc.querySelector("img");
     return imgElement ? imgElement.getAttribute("src") : null;
   }
-
- 
-
-  });
+});
   

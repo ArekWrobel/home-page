@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="description" content="Tech Radar: a tool to visualize technology choices, inspire and support teams to pick the best technologies for new projects">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/png" href="/img/logo.png">
+<link rel="stylesheet" href="/index_new.css">
+<script src="/index_new.js" defer></script>
+<title>Arkadiusz Wróbel - Technology Radar</title>
+
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="/radar.js"></script>
+<script src="/tech-radar-js.js" defer></script>
+<link rel="stylesheet" href="/radar.css">
+</head>
+
+<body>
+    <!-- Header -->
+<header>
+    <div class="nav-container">
+      <img src="/img/logo.png" alt="Logo" class="logo">
+      <h1>Arkadiusz Wróbel</h1>
+      <nav data-lang="en">
+        <ul>
+          <li><a href="#about">About Me</a></li>
+          <li><a href="#media">Media</a></li>
+          <li><a href="#radar">Technology Radar</a></li>
+          <li><a href="#offer">Offer</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <nav data-lang="pl">
+        <ul>
+          <li><a href="#about">O mnie</a></li>
+          <li><a href="#media">Media</a></li>
+          <li><a href="#radar">Technology Radar</a></li>
+          <li><a href="#offer">Oferta</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#contact">Kontakt</a></li>
+        </ul>
+      </nav>
+      <div class="language-switch">
+        <select id="language-select">
+          <option value="en">🇬🇧 English</option>
+          <option value="pl" selected>🇵🇱 Polski</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+<svg id="radar"></svg>
+
+<table data-lang="en">
+<tr>
+<td>
+
+<h3>What is the Tech Radar?</h3>
+
+<p>
+Tech Radar is a list of technologies, complemented by an assessment result, called <em>ring assignment</em>. We use four rings with the following semantics:
+</p>
+
+<ul>
+<li><strong>ADOPT</strong> &mdash; Technologies we have high confidence in to serve our purpose, also in large scale. Technologies with a usage culture in our Zalando production environment, low risk and recommended to be widely used.</li>
+<li><strong>TRIAL</strong> &mdash; Technologies that we have seen work with success in project work to solve a real problem; first serious usage experience that confirm benefits and can uncover limitations. TRIAL technologies are slightly more risky; some engineers in our organization walked this path and will share knowledge and experiences.</li>
+<li><strong>ASSESS</strong> &mdash; Technologies that are promising and have clear potential value-add for us; technologies worth to invest some research and prototyping efforts in to see if it has impact. ASSESS technologies have higher risks; they are often brand new and highly unproven in our organisation. You will find some engineers that have knowledge in the technology and promote it, you may even find teams that have started a prototyping effort.</li>
+<li><strong>HOLD</strong> &mdash; Technologies not recommended to be used for new projects. Technologies that we think are not (yet) worth to (further) invest in. HOLD technologies should not be used for new projects, but usually can be continued for existing projects.</li>
+</ul>
+
+</td><td>
+
+<h3>What is the purpose?</h3>
+
+<p>
+    Tech Radar serves as an inspiring and supportive tool for selecting the optimal technologies for new projects. It fosters knowledge sharing, facilitates reflection on technology decisions, and promotes the continuous evolution of my technology landscape. Based on on the <a href="https://www.thoughtworks.com/radar">pioneering work of ThoughtWorks</a>, my  Tech Radar highlights noteworthy changes in software development technologies that I recommend during the work whith my customers.
+
+</p>
+
+<h3>How do I maintain it?</h3>
+
+<p>
+The Tech Radar is maintained by <em>me Engineers</em> &mdash; who facilitate and drive the technology selection discussions at Zalando across the Engineering Community. Assignment of technologies to rings is the outcome of ring change proposals, which are discussed and voted on. The Tech Radar is open for contribution for all Engineering teams at Zalando and depends on their active participation to share lessons learned, pitfalls, and contribute to good practices on using the technologies.<br/>
+</p>
+
+<p>
+Check out my <a href="https://blog.softwareveteran.dev/"> Blog</a> for more information on how I approach Technology Selection and use the Tech Radar.
+</p>
+
+
+</td></tr>
+</table>
+
+<table data-lang="pl">
+    <tr>
+    <td>
+    
+        <h3>Co to jest radar technologiczny?</h3>
+    
+    <p>
+        Radar technologii to lista technologii, uzupełniona wynikami oceny, zwaną przypisaniem pierścienia <em>. Używamy czterech pierścieni z następującą semantyką:
+    </p>
+    
+    <ul>
+    <li><strong>ADOPT</strong> &mdash; Technologie, w których mamy duże zaufanie, aby służyć naszemu celowi, również na dużą skalę. Technologie z kulturą użytkowania w naszym środowisku produkcyjnym Zalando, niskie ryzyko i zalecane są szeroko stosowane.</li>
+    <li><strong>TRIAL</strong> &mdash; Technologie, które widzieliśmy z sukcesem w pracy projektowej w celu rozwiązania prawdziwego problemu; Pierwsze poważne doświadczenie użytkowania, które potwierdzają korzyści i może odkryć ograniczenia. Technologie próbne są nieco bardziej ryzykowne; Niektórzy inżynierowie w naszej organizacji przeszli tą ścieżką i podzielą się wiedzą i doświadczeniami.</li>
+    <li><strong>ASSESS</strong> &mdash; Technologie, które są obiecujące i mają dla nas wyraźną potencjalną wartość dodaną; Technologie warte zainwestowania niektórych badań i prototypowania, aby sprawdzić, czy ma to wpływ. Ocena technologii mają większe ryzyko; Często są zupełnie nowe i bardzo niesprawdzone w naszej organizacji. Znajdziesz niektórych inżynierów, którzy mają wiedzę na temat technologii i promują ją, możesz nawet znaleźć zespoły, które rozpoczęły prototypowanie.</li>
+    <li><strong>HOLD</strong> &mdash; Technologie nie zaleca się stosowania w nowych projektach. Technologie, które naszym zdaniem nie są (jeszcze) warte (dalej) inwestowania. Hold Technologies nie powinny być wykorzystywane do nowych projektów, ale zwykle można je kontynuować w przypadku istniejących projektów.</li>
+    </ul>
+    
+    </td><td>
+    
+    <h3>Jaki jest cel?</h3>
+    
+    <p>
+        Tech Radar służy jako inspirujące i wspierające narzędzie do wyboru optymalnych technologii nowych projektów. Wspiera dzielenie się wiedzą, ułatwia refleksję nad decyzjami technologicznymi i promuje ciągłą ewolucję mojego krajobrazu technologicznego. Na podstawie <a href = "https://www.thoughtworks.com/radar"> pionierskie dzieło ThoughtWorks</a>, Mój radar technologiczny podkreśla godne uwagi zmiany w technologiach tworzenia oprogramowania, które polecam podczas pracy w moich klientach.
+    
+    </p>
+    
+    <h3>Jak to utrzymać?</h3>
+    
+    <p>
+        Radar technologiczny jest utrzymywany przez <em> ME Engineers </em> & mdash; którzy ułatwiają i prowadzą dyskusje na temat wyboru technologii w Zalando w całej społeczności inżynieryjnej. Przypisanie technologii do pierścieni jest wynikiem propozycji zmiany pierścienia, które są omawiane i głosowane. Radar technologiczny jest otwarty na wkład dla wszystkich zespołów inżynieryjnych w Zalando i zależy od ich aktywnego udziału w dzieleniu się wyciągniętych wniosków, pułapek i przyczyniania się do dobrych praktyk w korzystaniu z technologii.<br/>
+    </p>
+    
+    <p>
+        Sprawdź moje <a href = "https://blog.softwareveteran.dev/"> blog </a> Więcej informacji na temat wyboru technologii i korzystania z radaru technologicznego.
+    </p>
+    
+    
+    </td></tr>
+ </table>
+ <!-- Footer -->
+ <footer id="contact">
+    <div class="footer-container">
+      <p>Arkadiusz Wróbel</p>
+      <p>Contact Number: +48 600 519 224</p>
+      <p>Address: Henryka Brodatego 4, 92-413 Łódź, Polska</p>
+      <p>Tax Number: PL9491459409</p>
+      <p>Email: <a href="mailto:arwrobel@gmail.com">arwrobel@gmail.com</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>
