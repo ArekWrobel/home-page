@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   
 // Fetch and display the latest blog posts from RSS feed
-fetch("https://blog.softwareveteran.dev/feeds/posts/default?alt=rss")
+fetch("https://softwareveteran.dev/api/blog-proxy.php")
 .then((response) => response.text())
 .then((str) => {
   const parser = new DOMParser();
