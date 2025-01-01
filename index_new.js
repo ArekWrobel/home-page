@@ -58,9 +58,10 @@ fetch("https://softwareveteran.dev/api/blog-proxy.php")
   items.forEach((item, index) => {
     if (index < 4) {
       const title = item.querySelector("title").textContent;
-      const link = item.querySelector("link").getAttribute("href");
+      const link = item.querySelector("link").textContent;
       const published = new Date(item.querySelector("pubDate").textContent).toDateString();
       const summary = getFirstThreeSentences(item.querySelector("description")?.textContent || ""); // Optional
+
       const imageSrc = extractImageFromDescription(item.querySelector("description")?.textContent) || "https://via.placeholder.com/300";
     //   const mediaThumbnail = item.querySelector("media\\:thumbnail")?.getAttribute("url") || "https://via.placeholder.com/300";
 
