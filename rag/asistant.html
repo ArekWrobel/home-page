@@ -159,6 +159,8 @@
       to   { opacity: 1; transform: translateY(0); }
     }
   </style>
+  <script src="https://www.google.com/recaptcha/api.js?render=6LdO4mErAAAAAIDJqymOXSLNapEXYR9K6Acoz0Iv"></script>
+
 </head>
 <body>
   <div class="container">
@@ -170,7 +172,9 @@
     <!-- Formularz pytania -->
     <form id="chat-form">
       <textarea id="question" rows="2" placeholder="Twoje pytanie..."></textarea>
-      <button type="button" id="sendBtn">
+      <input type="hidden" name="g-recaptcha-response" id="recaptchaToken">
+      <button type="button" 
+        id="sendBtn">
         Wyślij 
         <!-- Ikona papierowego samolotu (wyślij) jako SVG -->
         <svg width="18" height="18" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true">
@@ -237,6 +241,10 @@
 
     // Obsługa kliknięcia przycisku "Wyślij"
     sendButton.addEventListener('click', async () => {
+    grecaptcha.execute('YOUR_SITE_KEY', {action: 'submit'}).then(function(token) {
+            // Umieść token w ukrytym polu formularza
+            document.getElementById('recaptchaToken').value = token;
+        });
       const question = questionInput.value.trim();
       if(!question) return; // nie wysyłaj pustych pytań
       // Dodaj wiadomość użytkownika do interfejsu
