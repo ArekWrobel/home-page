@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Czat AI – SoftwareVeteran</title>
+  <!-- Import Google Font (Open Sans) -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #3498db; /* główny kolor akcentowy (np. niebieski SoftwareVeteran) */
+    }
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #ffffff;
+      font-family: 'Open Sans', sans-serif;
+      color: #333;
+    }
+    /* Kontener strony z ograniczoną szerokością */
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    h1 {
+      font-weight: 600;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    /* Obszar czatu - lista wiadomości */
+    #chat {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; /* domyślnie do lewej */
+      padding: 10px;
+      overflow-y: auto;
+      background: #fafafa;
+      border: 1px solid #DDD;
+      border-radius: 8px;
+    }
+    /* Pojedyncza wiadomość (kontener) */
+    .message {
+      display: flex;
+      align-items: flex-start;
+      margin: 5px 0;
+      /* Animacja fade-in na pojawienie */
+      animation: fadeIn 0.3s ease forwards;
+    }
+    /* Awatar bota */
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%; /* 50% will make the image circular :contentReference[oaicite:16]{index=16} */
+      margin-right: 10px;
+    }
+    /* Styl dymka wiadomości */
+    .bubble {
+      display: inline-block;
+      padding: 10px 15px;
+      border-radius: 12px;
+      max-width: 80%;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      word-wrap: break-word;
+      /* Cień dla lepszego oddzielenia od tła (opcjonalnie) */
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    /* Dymek bota (lewa strona) */
+    .bot-message .bubble {
+      background: #f1f1f1;
+      color: #333;
+      border-bottom-left-radius: 4px; /* lekko inny róg dla "ogonka" */
+    }
+    /* Dymek użytkownika (prawa strona) */
+    .user-message .bubble {
+      background: var(--primary-color);
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+    /* Wyrównanie wiadomości: użytkownik na prawo, bot na lewo */
+    .user-message {
+      align-self: flex-end; /* wyrównaj cały kontener wiadomości do prawej */
+    }
+    .bot-message {
+      align-self: flex-start; /* wyrównaj do lewej (domyślnie) */
+    }
+    /* Efekt pisania - trzy kropki */
+    .bubble.typing {
+      background: #f1f1f1;
+      color: transparent; /* tekst ewentualny niewidoczny */
+      position: relative;
+    }
+    .dots {
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      margin: 0 2px;
+      background: #999;
+      border-radius: 50%;
+      position: relative;
+      animation: jump 1s infinite ease-in-out;
+    }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes jump {
+      0%, 100% { bottom: 0; opacity: 0.3; }
+      50%      { bottom: 5px; opacity: 1; }
+    }
+    /* Formularz wejściowy (pole + przycisk) */
+    #chat-form {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+    }
+    #question {
+      flex: 1;
+      font-size: 1rem;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+    #question:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 5px rgba(0,123,255,0.2);
+    }
+    #sendBtn {
+      background: var(--primary-color);
+      color: #fff;
+      font-size: 1rem;
+      border: none;
+      padding: 10px 16px;
+      margin-left: 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #sendBtn:hover {
+      background: #2c8ad4; /* nieco ciemniejszy niebieski przy hover */
+    }
+    /* Ikonka samolotu na przycisku (SVG) */
+    #sendBtn svg {
+      margin-left: 4px;
+    }
+    /* Animacja pojawiania się wiadomości */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Czat z Asystentem AI</h1>
+    <!-- Obszar wyświetlania czatu -->
+    <div id="chat">
+      <!-- Wiadomości będą dynamicznie dodawane tutaj -->
+    </div>
+    <!-- Formularz pytania -->
+    <form id="chat-form">
+      <textarea id="question" rows="2" placeholder="Twoje pytanie..."></textarea>
+      <button type="button" id="sendBtn">
+        Wyślij 
+        <!-- Ikona papierowego samolotu (wyślij) jako SVG -->
+        <svg width="18" height="18" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true">
+          <path d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 
+                   13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 
+                   52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/>
+        </svg>
+      </button>
+    </form>
+  </div>
+
+  <script>
+    const chatContainer = document.getElementById('chat');
+    const questionInput = document.getElementById('question');
+    const sendButton = document.getElementById('sendBtn');
+
+    // Funkcja dodająca wiadomość do okna czatu
+    function addMessage(text, sender='bot') {
+      const messageEl = document.createElement('div');
+      messageEl.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
+      // Jeśli bot – dołącz avatar
+      if(sender === 'bot') {
+        const avatarEl = document.createElement('img');
+        avatarEl.src = './bot-icon.png';  // Ścieżka do obrazka awatara bota
+        avatarEl.alt = 'Bot';
+        avatarEl.className = 'avatar';
+        messageEl.appendChild(avatarEl);
+      }
+      // Tworzenie dymka z tekstem
+      const bubbleEl = document.createElement('div');
+      bubbleEl.classList.add('bubble');
+      bubbleEl.innerText = text;
+      messageEl.appendChild(bubbleEl);
+      // Dodanie wiadomości do kontenera czatu
+      chatContainer.appendChild(messageEl);
+      // Przewinięcie do dołu, aby nowa wiadomość była widoczna
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+      return bubbleEl;
+    }
+
+    // Funkcja dodająca wskaźnik "pisania" (trzy kropki) jako tymczasowy dymek bota
+    function showTypingIndicator() {
+      const typingEl = document.createElement('div');
+      typingEl.classList.add('message', 'bot-message');
+      // Awatar bota
+      const avatarEl = document.createElement('img');
+      avatarEl.src = './bot-icon.png';
+      avatarEl.alt = 'Bot';
+      avatarEl.className = 'avatar';
+      typingEl.appendChild(avatarEl);
+      // Dymek z kropkami
+      const bubbleEl = document.createElement('div');
+      bubbleEl.classList.add('bubble', 'typing');
+      // Kontener kropek
+      const dotsEl = document.createElement('span');
+      dotsEl.className = 'dots';
+      dotsEl.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+      bubbleEl.appendChild(dotsEl);
+      typingEl.appendChild(bubbleEl);
+      chatContainer.appendChild(typingEl);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+      return typingEl;
+    }
+
+    // Obsługa kliknięcia przycisku "Wyślij"
+    sendButton.addEventListener('click', async () => {
+      const question = questionInput.value.trim();
+      if(!question) return; // nie wysyłaj pustych pytań
+      // Dodaj wiadomość użytkownika do interfejsu
+      addMessage(question, 'user');
+      questionInput.value = ''; // wyczyść pole
+      // Pokaż wskaźnik "pisania" bota
+      const typingIndicator = showTypingIndicator();
+      // Wyślij zapytanie do webhooka (POST)
+      try {
+        const response = await fetch('https://hook.eu2.make.com/t85nifvqvpqbhhc3r6z47cyyj4tpj8p5', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: question })
+        });
+        const data = await response.json();  // zakładamy, że odpowiedź to czysty tekst
+        // Usuń wskaźnik pisania
+        chatContainer.removeChild(typingIndicator);
+        // Dodaj odpowiedź bota
+        addMessage(data.answer, 'bot');
+      } catch(error) {
+        chatContainer.removeChild(typingIndicator);
+        addMessage("Wystąpił błąd przy pobieraniu odpowiedzi.", 'bot');
+        console.error('Błąd fetch:', error);
+      }
+    });
+  </script>
+</body>
+</html>
