@@ -241,7 +241,7 @@
 
     // Obsługa kliknięcia przycisku "Wyślij"
     sendButton.addEventListener('click', async () => {
-    grecaptcha.execute('YOUR_SITE_KEY', {action: 'submit'}).then(function(token) {
+    grecaptcha.execute('6LdO4mErAAAAAIDJqymOXSLNapEXYR9K6Acoz0Iv', {action: 'submit'}).then(function(token) {
             // Umieść token w ukrytym polu formularza
             document.getElementById('recaptchaToken').value = token;
         });
