@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plansza 24 pola – Overemployment</title>
+  <style>
+    :root{
+      --tile: 140px;              /* rozmiar pojedynczego pola */
+      --gap: 6px;                 /* odstęp między polami */
+      --radius: 12px;             /* zaokrąglenia */
+
+      /* kolory branż (wesołe, kontrastowe) */
+      --ecom: #3b82f6;            /* e-commerce */
+      --gaming: #f59e0b;          /* gaming */
+      --ai: #a855f7;              /* AI/ML */
+      --fin: #10b981;             /* fintech */
+
+      /* stany specjalne */
+      --event: #ffffff;           /* zdarzenie */
+      --stress: #ef4444;          /* stres */
+      --risk: #f97316;            /* ryzyko */
+      --corner: #9ca3af;          /* narożniki */
+
+      --ink: #0f172a;             /* tekst */
+      --muted: #334155;           /* opis */
+      --paper: #f8fafc;           /* tło */
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:var(--paper);color:var(--ink);font-family:system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Noto Sans", Arial, "Apple Color Emoji","Segoe UI Emoji"}
+
+    .wrap{
+      display:grid;
+      place-items:center;
+      padding:24px;
+    }
+
+    .board{
+      display:grid;
+      grid-template-columns: repeat(7, var(--tile));
+      grid-template-rows: repeat(7, var(--tile));
+      gap: var(--gap);
+      background:#e2e8f0;
+      padding: var(--gap);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(2,6,23,.1), 0 6px 20px rgba(2,6,23,.08);
+    }
+
+    .tile{
+      background:#fff;
+      border-radius: var(--radius);
+      border:2px solid rgba(15,23,42,.12);
+      display:flex;flex-direction:column;justify-content:center;align-items:center;
+      text-align:center;
+      padding:10px;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.6);
+    }
+
+    .tile .emoji{font-size:24px; line-height:1; margin-bottom:6px}
+    .tile .title{font-size:14px; font-weight:700}
+    .tile .note{font-size:11px; color:var(--muted); margin-top:4px}
+
+    /* Kolorystyka grup */
+    .ecom{ background: color-mix(in oklab, var(--ecom) 18%, white); border-color: color-mix(in oklab, var(--ecom) 60%, #0000);} 
+    .gaming{ background: color-mix(in oklab, var(--gaming) 22%, white); border-color: color-mix(in oklab, var(--gaming) 60%, #0000);} 
+    .ai{ background: color-mix(in oklab, var(--ai) 18%, white); border-color: color-mix(in oklab, var(--ai) 60%, #0000);} 
+    .fin{ background: color-mix(in oklab, var(--fin) 18%, white); border-color: color-mix(in oklab, var(--fin) 60%, #0000);} 
+
+    .event{ background: var(--event); border-style:dashed; }
+    .stress{ background: color-mix(in oklab, var(--stress) 10%, white); border-color: color-mix(in oklab, var(--stress) 60%, #0000);} 
+    .risk{ background: color-mix(in oklab, var(--risk) 10%, white); border-color: color-mix(in oklab, var(--risk) 60%, #0000);} 
+    .corner{ background: color-mix(in oklab, var(--corner) 12%, white); border-color: color-mix(in oklab, var(--corner) 60%, #0000);} 
+
+    /* Pole centralne (legenda + talie) */
+    .center {
+      grid-row: 2 / span 5;
+      grid-column: 2 / span 5;
+      border-radius: 16px;
+      padding: 20px;
+      display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;
+      background: #ffffff;
+      border:2px dashed rgba(15,23,42,.12);
+    }
+    .center h1{font-size:22px; margin:0}
+    .legend{display:grid; grid-template-columns:repeat(2, minmax(180px,1fr)); gap:10px; width:100%; max-width:680px}
+    .legend .row{display:flex; align-items:center; gap:10px; font-size:13px}
+    .legend .sw{width:18px;height:18px;border-radius:6px;border:2px solid rgba(2,6,23,.12)}
+    .pile{display:flex; gap:10px; margin-top:10px}
+    .card{ border:2px dashed rgba(15,23,42,.2); border-radius:12px; padding:12px 14px; background:#f8fafc; font-size:12px }
+
+    /* druk */
+    @media print{
+      :root{ --tile: 110px; }
+      body{ background:#fff }
+      .wrap{ padding:0 }
+      .board{ box-shadow:none }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="board" id="board">
+      <!-- 7x7 siatka; wypełniamy TYLKO obwódkę (24 pola) i środek na legendę -->
+      <div class="center">
+        <h1>Gra Overemployment – Plansza (24 pola)</h1>
+        <div class="legend">
+          <div class="row"><span class="sw" style="background: color-mix(in oklab, var(--ecom) 18%, white);"></span> Projekty E‑commerce (niebieskie)</div>
+          <div class="row"><span class="sw" style="background: color-mix(in oklab, var(--gaming) 22%, white);"></span> Projekty Gaming (pomarańczowe)</div>
+          <div class="row"><span class="sw" style="background: color-mix(in oklab, var(--ai) 18%, white);"></span> Projekty AI/ML (fioletowe)</div>
+          <div class="row"><span class="sw" style="background: color-mix(in oklab, var(--fin) 18%, white);"></span> Projekty FinTech (zielone)</div>
+          <div class="row"><span class="sw" style="background:var(--event)"></span> Zdarzenie: Los IT</div>
+          <div class="row"><span class="sw" style="background: color-mix(in oklab, var(--stress) 10%, white);"></span> Stres: podatek mentalny</div>
+          <div class="row"><span class="sw" style="background: color-mix(in oklab, var(--risk) 10%, white);"></span> Test wykrycia</div>
+          <div class="row"><span class="sw" style="background: color-mix(in oklab, var(--corner) 12%, white);"></span> Pola narożne</div>
+        </div>
+        <div class="pile">
+          <div class="card">Talia Wydarzeń: połóż tutaj</div>
+          <div class="card">Talia Projektów: połóż tutaj</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * Układ 24 pól na obramowaniu siatki 7x7 – zgodnie z kolejnością zegarową
+     * Start: górny-lewy róg (index 0)
+     */
+    const order = [];
+    const N = 7;
+    // górny rząd (0..6)
+    for (let c=0; c<N; c++) order.push([0,c]);
+    // prawa kolumna (1..6)
+    for (let r=1; r<N; r++) order.push([r,N-1]);
+    // dolny rząd (5..0)
+    for (let c=N-2; c>=0; c--) order.push([N-1,c]);
+    // lewa kolumna (5..1)
+    for (let r=N-2; r>=1; r--) order.push([r,0]);
+    // teraz order.length = 24
+
+    // Definicje pól w kolejności (24)
+    const tiles = [
+      // 0..6 (góra lewo->prawo)
+      { type:'corner', emoji:'🏁', title:'START', note:'Pierwszy dzień sprintu' },
+      { type:'ecom', emoji:'🛒', title:'Sklep Headless', note:'E‑commerce' },
+      { type:'event', emoji:'🎲', title:'Zdarzenie – Los IT', note:'Dobierz kartę' },
+      { type:'ecom', emoji:'🧾', title:'Marketplace B2B', note:'E‑commerce' },
+      { type:'stress', emoji:'🔥', title:'Stres – Nadgodziny', note:'+ podatek mentalny' },
+      { type:'ecom', emoji:'💳', title:'Checkout One‑Click', note:'E‑commerce' },
+      { type:'corner', emoji:'🗣️', title:'1:1 z HR', note:'Oddaj turę (pauza)' },
+
+      // 7..12 (prawa kolumna góra->dół)
+      { type:'gaming', emoji:'🎮', title:'Gacha MMO', note:'Gaming' },
+      { type:'risk', emoji:'🕵️', title:'Test wykrycia', note:'Rzut na wykrycie' },
+      { type:'gaming', emoji:'📱', title:'Mobile Idle', note:'Gaming' },
+      { type:'event', emoji:'🎲', title:'Zdarzenie – Los IT', note:'Dobierz kartę' },
+      { type:'gaming', emoji:'🕶️', title:'VR Rhythm', note:'Gaming' },
+      { type:'corner', emoji:'💸', title:'Dzień Wypłaty', note:'+ zasoby / kariera' },
+
+      // 13..18 (dół prawo->lewo)
+      { type:'ai', emoji:'🧠', title:'Detekcja Bugów AI', note:'AI/ML' },
+      { type:'event', emoji:'🎲', title:'Zdarzenie – Los IT', note:'Dobierz kartę' },
+      { type:'ai', emoji:'🗓️', title:'Asystent Meetingów', note:'AI/ML' },
+      { type:'stress', emoji:'☕', title:'Stres – 5 calli pod rząd', note:'+ podatek mentalny' },
+      { type:'ai', emoji:'⌨️', title:'Generator Commitów', note:'AI/ML' },
+      { type:'corner', emoji:'🅿️', title:'Cichy Piątek', note:'Wolny parking spotkań' },
+
+      // 19..23 (lewa kolumna dół->góra)
+      { type:'fin', emoji:'🧮', title:'Księgowość w Chmurze', note:'FinTech' },
+      { type:'risk', emoji:'🕵️', title:'Test wykrycia', note:'Rzut na wykrycie' },
+      { type:'fin', emoji:'🪪', title:'KYC/KYB Automatyzacja', note:'FinTech' },
+      { type:'event', emoji:'🎲', title:'Zdarzenie – Los IT', note:'Dobierz kartę' },
+      { type:'fin', emoji:'💼', title:'Krypto‑Wallet z KYC', note:'FinTech' },
+    ];
+
+    const board = document.getElementById('board');
+
+    tiles.forEach((t, i) => {
+      const [r,c] = order[i];
+      const el = document.createElement('div');
+      el.className = `tile ${t.type}`;
+      el.style.gridRowStart = r+1;
+      el.style.gridColumnStart = c+1;
+      el.innerHTML = `<div class="emoji">${t.emoji}</div><div class="title">${t.title}</div><div class="note">${t.note}</div>`;
+      board.appendChild(el);
+    });
+  </script>
+</body>
+</html>
