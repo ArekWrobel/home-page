@@ -57,7 +57,7 @@ if (isset($_POST['document_number'])) {
         $buyer_name_hash = isset($data['buyer']) ? hashData($data['buyer']) : null;
         $buyer_address_hash = !empty($data['buyer_address']) ? hashData($data['buyer_address']) : null;
         $quantity = $data['quantity'];
-        $unit_price = $data['unit_price']
+        $unit_price = $data['unit_price'];
         $total = $data['unit_price'] * $data['quantity'];
         
         $sql = "INSERT INTO invoices (invoice_number_int, invoice_number, issue_date, seller_name_hash, seller_address_hash, buyer_name_hash, buyer_address_hash, service, quantity, unit_price, total)
