@@ -42,8 +42,11 @@ if (isset($_POST['document_number'])) {
         function hashData($string) {
             return hash('sha256', $string);
         }
+        $data = $_POST;
         $issue_date = $data['issue_date'];
-        $date_obj = DateTime::createFromFormat('Y-m-d', $issue_date);
+        $dateString = $issue_date ?? '';
+
+        $date_obj = DateTime::createFromFormat('Y-m-d', $dateString);
         $month = $date_obj->format('m');
         $year = $date_obj->format('Y');
 
@@ -76,7 +79,7 @@ if (isset($_POST['document_number'])) {
         //$stmt->execute([':inv' => $new_invoice_number]);
 
         // Pobierz dane z formularza
-        $data = $_POST;
+       
 
     } catch (PDOException $e) {
         http_response_code(500);
