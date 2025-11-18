@@ -1,156 +1,157 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <title>Faktura EZ — styl Preston</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Nowoczesna czcionka -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>EZ Faktura — Styl Preston</title>
+
+  <!-- Ikony do favicon i PWA -->
+  <link rel="icon" href="icons/icon-192.png" sizes="192x192" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <meta name="theme-color" content="#FF6400" />
+
+  <!-- Manifest PWA -->
+  <link rel="manifest" href="manifest.json" />
+
+  <!-- Czcionki Google -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap"
+    rel="stylesheet"
+  />
   <style>
+    :root {
+      --primary-color: #ff6400;
+      --bg-dark: #111;
+      --bg-form: #232323;
+      --input-bg: #151515;
+      --input-focus-bg: #222;
+      --input-border: var(--primary-color);
+      --input-focus-border: #fff;
+      --text-color: #fff;
+    }
+    * {
+      box-sizing: border-box;
+    }
     body {
-      background: #111;
-      color: #fff;
-      font-family: 'Montserrat', Arial, sans-serif;
       margin: 0;
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-color);
       min-height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
-      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
     }
     .container {
-      background: #232323;
-      border: 2px solid #FF6400;
-      border-radius: 12px;
-      padding: 48px 36px 32px;
-      box-shadow: 0 4px 32px rgba(0,0,0,0.35);
-      max-width: 420px;
       width: 100%;
+      max-width: 420px;
+      background: var(--bg-form);
+      border-radius: 12px;
+      border: 2px solid var(--primary-color);
+      padding: 3rem 2.5rem 2rem;
+      box-shadow: 0 4px 32px rgba(0, 0, 0, 0.35);
     }
     h1 {
-      margin-bottom: 36px;
-      color: #FF6400;
-      letter-spacing: 2px;
-      font-size: 2rem;
-      text-align: center;
+      margin-bottom: 2rem;
       font-weight: 700;
+      letter-spacing: 2px;
+      text-align: center;
+      font-size: 2rem;
+      color: var(--primary-color);
     }
-    form label {
+    label {
       display: block;
-      margin-bottom: 18px;
-      font-size: 0.94rem;
+      margin-bottom: 1.3rem;
       font-weight: 400;
+      font-size: 0.95rem;
     }
-    form input[type="text"],
-    form input[type="date"],
-    form input[type="number"] {
+    input[type='text'],
+    input[type='date'],
+    input[type='number'] {
       width: 100%;
-      background: #151515;
-      color: #fff;
-      border: 1px solid #FF6400;
-      border-radius: 6px;
-      padding: 8px 12px;
-      margin-top: 5px;
+      padding: 0.5rem 0.8rem;
       font-size: 1rem;
-      outline: none;
-      box-sizing: border-box;
-      transition: border 0.2s;
+      color: var(--text-color);
+      background: var(--input-bg);
+      border-radius: 6px;
+      border: 1px solid var(--input-border);
+      outline-offset: 1px;
+      transition: background-color 0.2s, border-color 0.2s;
     }
-    form input[type="text"]:focus,
-    form input[type="date"]:focus,
-    form input[type="number"]:focus {
-      border: 1.5px solid #fff;
-      background: #222;
-    }
-    .row {
-      margin-bottom: 12px;
+    input[type='text']:focus,
+    input[type='date']:focus,
+    input[type='number']:focus {
+      background: var(--input-focus-bg);
+      border-color: var(--input-focus-border);
     }
     .total-preview {
-      background: #1e1e1e;
-      border: 1px dashed #FF6400;
-      color: #FF6400;
-      padding: 10px;
-      border-radius: 5px;
-      margin-bottom: 18px;
-      font-size: 1.08rem;
-      text-align: center;
+      border: 1px dashed var(--primary-color);
+      padding: 0.8rem;
+      margin-bottom: 1.3rem;
       font-weight: 700;
+      text-align: center;
+      font-size: 1.1rem;
+      color: var(--primary-color);
+      border-radius: 5px;
     }
     .btn-main {
-      background: #FF6400;
-      color: #111;
-      font-weight: 700;
-      text-transform: uppercase;
+      display: block;
+      width: 100%;
+      background: var(--primary-color);
       border: none;
       border-radius: 6px;
-      padding: 12px 0;
-      width: 100%;
+      padding: 0.9rem 0;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--bg-dark);
       cursor: pointer;
-      font-size: 1.1rem;
+      text-transform: uppercase;
       letter-spacing: 1px;
-      box-shadow: 0 2px 8px rgba(255,100,0,0.16);
-      transition: background 0.2s;
+      box-shadow: 0 2px 8px rgba(255, 100, 0, 0.24);
+      transition: background-color 0.3s, color 0.3s;
     }
-    .btn-main:hover, .btn-main:focus {
-      background: #fff;
-      color: #FF6400;
-    }
-    @media (max-width: 600px) {
-      .container {
-        padding: 24px 10px 20px;
-      }
+    .btn-main:hover,
+    .btn-main:focus {
+      background: var(--text-color);
+      color: var(--primary-color);
+      outline: none;
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" role="main">
     <h1>EZ Faktura</h1>
     <form id="invoiceForm" autocomplete="off" action="generate_invoice.php" method="POST">
-      <div class="row">
-        <label>Data wystawienia:
-          <input type="date" name="issue_date" id="issue_date" required>
-        </label>
-      </div>
-      <div class="row">
-        <label>Imię i nazwisko sprzedawcy:
-          <input type="text" name="seller" id="seller" required>
-        </label>
-      </div>
-      <div class="row">
-        <label>Adres sprzedawcy (opcjonalnie):
-          <input type="text" name="seller_address" id="seller_address">
-        </label>
-      </div>
-      <div class="row">
-        <label>Dane nabywcy:
-          <input type="text" name="buyer" id="buyer" required>
-        </label>
-      </div>
-      <div class="row">
-        <label>Adres nabywcy:
-          <input type="text" name="buyer_address" id="buyer_address">
-        </label>
-      </div>
-      <div class="row">
-        <label>Nazwa usługi:
-          <input type="text" name="service" id="service" required>
-        </label>
-      </div>
-      <div class="row">
-        <label>Ilość:
-          <input type="number" name="quantity" id="quantity" min="1" value="1" required>
-        </label>
-      </div>
-      <div class="row">
-        <label>Cena jednostkowa:
-          <input type="number" step="0.01" name="unit_price" id="unit_price" required>
-        </label>
-      </div>
+      <label for="issue_date">Data wystawienia:
+        <input type="date" name="issue_date" id="issue_date" required />
+      </label>
+      <label for="seller">Imię i nazwisko sprzedawcy:
+        <input type="text" name="seller" id="seller" required />
+      </label>
+      <label for="seller_address">Adres sprzedawcy (opcjonalnie):
+        <input type="text" name="seller_address" id="seller_address" />
+      </label>
+      <label for="buyer">Dane nabywcy:
+        <input type="text" name="buyer" id="buyer" required />
+      </label>
+      <label for="buyer_address">Adres nabywcy:
+        <input type="text" name="buyer_address" id="buyer_address" />
+      </label>
+      <label for="service">Nazwa usługi:
+        <input type="text" name="service" id="service" required />
+      </label>
+      <label for="quantity">Ilość:
+        <input type="number" name="quantity" id="quantity" min="1" value="1" required />
+      </label>
+      <label for="unit_price">Cena jednostkowa:
+        <input type="number" step="0.01" name="unit_price" id="unit_price" required />
+      </label>
       <div class="total-preview" id="totalPreview">Razem: 0.00 PLN</div>
-      <!-- <input type="hidden" name="document_number" value="1" type="number"> -->
       <button class="btn-main" type="submit">Generuj PDF</button>
     </form>
   </div>
+
   <script>
     // Dynamiczna kalkulacja ceny całkowitej
     const quantityEl = document.getElementById('quantity');
@@ -166,25 +167,53 @@
 
     quantityEl.addEventListener('input', updateTotal);
     unitPriceEl.addEventListener('input', updateTotal);
+    document.addEventListener('DOMContentLoaded', updateTotal);
 
-    // Wywołaj na starcie
-    document.addEventListener('DOMContentLoaded', () => {
-      updateTotal();
+    // Prosty prompt do instalacji PWA
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      // Możesz pokazać UI zachęcające użytkownika do instalacji
     });
 
-    // Opcjonalnie: walidacja JS - podświetl na czerwono pola wymagane jeśli puste
-    document.getElementById('invoiceForm').addEventListener('submit', function(e){
-      let requiredFields = ['issue_date','seller','buyer','service','quantity','unit_price'];
-      for (let id of requiredFields) {
-        let field = document.getElementById(id);
-        if (!field.value) {
-          field.style.borderColor = 'red';
-          e.preventDefault();
+    // Funkcja do wywołania instalki (np. pod przyciskiem)
+    function promptInstall() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          deferredPrompt = null;
+        });
+      }
+    }
+
+    // Walidacja formularza
+    document.getElementById('invoiceForm').addEventListener('submit', function (e) {
+      const required = ['issue_date', 'seller', 'buyer', 'service', 'quantity', 'unit_price'];
+      let valid = true;
+      for (const id of required) {
+        const el = document.getElementById(id);
+        if (!el.value) {
+          el.style.borderColor = 'red';
+          valid = false;
         } else {
-          field.style.borderColor = '#FF6400';
+          el.style.borderColor = 'var(--primary-color)';
         }
       }
+      if (!valid) e.preventDefault();
     });
+
+  </script>
+  <script>
+    // Rejestracja Service Workera do PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker
+          .register('sw.js')
+          .then(reg => console.log('Service Worker zarejestrowany', reg))
+          .catch(err => console.log('Błąd rejestracji SW', err));
+      });
+    }
   </script>
 </body>
 </html>
