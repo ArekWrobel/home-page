@@ -34,10 +34,10 @@ if (isset($_POST['document_number'])) {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Pobranie ostatniego numeru faktury
-        $stmt = $pdo->prepare("SELECT invoice_number FROM invoices ORDER BY id DESC LIMIT 1");
+        $stmt = $pdo->prepare("SELECT invoice_number_int FROM invoices ORDER BY id DESC LIMIT 1");
         $stmt->execute();
         $last_invoice = $stmt->fetch(PDO::FETCH_ASSOC);
-        $new_invoice_number = $last_invoice ? (intval($last_invoice['invoice_number']) + 1) : 1;
+        $new_invoice_number = $last_invoice ? (intval($last_invoice['invoice_number_int']) + 1) : 1;
 
         function hashData($string) {
             return hash('sha256', $string);
