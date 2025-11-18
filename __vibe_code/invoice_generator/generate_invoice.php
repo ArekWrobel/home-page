@@ -61,7 +61,7 @@ if (isset($_POST['document_number'])) {
         $total = $data['unit_price'] * $data['quantity'];
         
         $sql = "INSERT INTO invoices (invoice_number_int, invoice_number, issue_date, seller_name_hash, seller_address_hash, buyer_name_hash, buyer_address_hash, service, quantity, unit_price, total)
-        VALUES (:invoice_number, :issue_date, :seller_name_hash, :seller_address_hash, :buyer_name_hash, :buyer_address_hash, :service, :quantity, :unit_price, :total)";
+        VALUES (:invoice_number_int, :invoice_number, :issue_date, :seller_name_hash, :seller_address_hash, :buyer_name_hash, :buyer_address_hash, :service, :quantity, :unit_price, :total)";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
                 ':invoice_number_int'=> $new_invoice_number,
