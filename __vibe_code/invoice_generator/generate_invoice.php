@@ -1,5 +1,10 @@
 <?php
-require('fpdf.php'); // Dołącz FPDF
+header('Content-Type: text/html; charset=UTF-8');
+mb_internal_encoding('UTF-8');
+// file_put_contents('debug_post.txt', print_r($_POST, true), FILE_APPEND);
+
+// require('fpdf.php'); // Dołącz FPDF
+require('tcpdf/tcpdf.php'); // Dołącz TCPDF
 
 // Sprawdź parametr GET document_number
 if (isset($_POST['document_number'])) {
@@ -92,47 +97,117 @@ if (isset($_POST['document_number'])) {
 }
 
 $total = $data['unit_price'] * $data['quantity'];
-
+$quantity = $data['quantity'];
+$issue_date = $data['issue_date'];
+$unit_price = $data['unit_price'];
+$seller = $data['seller'] ?? '';
+$seller_address = $data['seller_address'] ?? '';
+$buyer = $data['buyer'] ?? '';
+$buyer_address = $data['buyer_address'] ?? '';
+$service = $data['service'] ?? '';
 
 
 
 // Inicjalizacja PDF
-$pdf = new FPDF();
+// $pdf = new FPDF();
+// $pdf->SetFont('dejaVuSans', '', 12);
+$pdf = new TCPDF();
 $pdf->AddPage();
-$pdf->SetFont('Arial','B',16);
-// $pdf->SetDrawColor(255, 100, 0); //aby ustawić pomarańczowy kolor linii.
+$pdf->SetFont('freesans','B',16);
+// $pdf->SetTextColor(255, 100, 0); // Pomarańczowy
+$pdf->Cell(0,10,"FAKTURA NR ".$invoice_number_formatted,0,1,'C');
 
-// $pdf->SetTextColor(255, 100, 0); //dla pomarańczowego tekstu.
+// Separator
+// $pdf->SetDrawColor(255, 100, 0);
+// $pdf->Line(10, 32, 200, 32);
 
-// $pdf->SetFillColor(17, 17, 17);
+$pdf->SetFont('freesans','',11);
 
-$pdf->Cell(0,10,"Faktura nr $invoice_number_formatted",0,1,'C');
 
-$pdf->SetFont('Arial','',12);
-$pdf->Cell(0,10,"Data wystawienia: {$data['issue_date']}",0,1);
-$pdf->Cell(0,10,"Sprzedawca: {$data['seller']}",0,1);
-if (!empty($data['seller_address'])) $pdf->Cell(0,10,"Adres sprzedawcy: {$data['seller_address']}",0,1);
-$pdf->Cell(0,10,"Nabywca: {$data['buyer']}",0,1);
-if (!empty($data['buyer_address'])) $pdf->Cell(0,10,"Adres nabywcy: {$data['buyer_address']}",0,1);
-$pdf->Ln();
+// Sekcja sprzedawcy
+$pdf->SetFont('freesans','B',10);
+$pdf->Cell(0,6,"SPRZEDAWCA:",0,1);
+$pdf->SetFont('freesans','',9);
+$pdf->Cell(0,5,$seller,0,1);
+if (!empty($seller_address)) {
+    $pdf->Cell(0,5,$seller_address,0,1);
+}
 
-$pdf->Cell(60,10,'Nazwa uslugi',1);
-$pdf->Cell(30,10,'Ilosc',1);
-$pdf->Cell(40,10,'Cena jedn.',1);
-$pdf->Cell(40,10,'Kwota',1,1);
 
-$pdf->Cell(60,10,$data['service'],1);
-$pdf->Cell(30,10,$data['quantity'],1);
-$pdf->Cell(40,10,number_format($data['unit_price'],2),1);
-$pdf->Cell(40,10,number_format($total,2),1,1);
+// Sekcja nabywcy
+$pdf->SetFont('freesans','B',10);
+$pdf->Cell(0,6,"NABYWCA:",0,1);
+$pdf->SetFont('freesans','',9);
+$pdf->Cell(0,5,$buyer,0,1);
+if (!empty($buyer_address)) {
+    $pdf->Cell(0,5,$buyer_address,0,1);
+}
+$pdf->Ln(5);
 
-$pdf->Ln();
-$pdf->Cell(0,10,'Razem do zaplaty: '.number_format($total,2).' PLN',0,1);
+// Data
+$pdf->SetFont('freesans','',9);
+$pdf->Cell(0,5,"Data wystawienia: ".$issue_date,0,1);
+// $pdf->Ln(5);
 
-$pdf->Ln();
-$pdf->SetFont('Arial','I',10);
-$pdf->MultiCell(0,8,"Sprzedawca korzysta ze zwolnienia podmiotowego z VAT.\nPodstawa: art. 113 ust. 1 i 9 ustawy o VAT.");
+// Tabela z produktami
+$pdf->SetFont('freesans','B',9);
+$pdf->SetFillColor(255, 100, 0);
+$pdf->SetTextColor(17, 17, 17); // Ciemny tekst na tle
+$pdf->Cell(100, 7, 'NAZWA USŁUGI', 1, 0, 'L', true);
+$pdf->Cell(25, 7, 'ILOŚĆ', 1, 0, 'C', true);
+$pdf->Cell(35, 7, 'CENA JED.', 1, 0, 'C', true);
+$pdf->Cell(30, 7, 'RAZEM', 1, 1, 'C', true);
+
+// Dane produktu
+$pdf->SetFont('freesans','',9);
+$pdf->SetTextColor(21, 21, 21); // Biały tekst
+$pdf->SetFillColor(255, 255, 255); // Ciemne tło
+
+// Zawinięcie tekstu dla "Nazwa usługi"
+$service_wrapped = wordwrap($service, 150, "\n");
+$service_lines = explode("\n", $service_wrapped);
+$max_lines = count($service_lines);
+
+// Wysokość wiersza dla multiline
+$row_height = 5 * $max_lines + $max_lines;// Dodatkowa przestrzeń między liniami
+
+$x_start = $pdf->GetX();
+$y_start = $pdf->GetY();
+
+// Komórka z nazwą usługi (zawinięty tekst)
+
+$pdf->MultiCell(100, 5, $service_wrapped, 1, 'L', true);
+
+
+$y_after_service = $pdf->GetY();
+$pdf->SetXY($x_start + 100, $y_start);
+
+// Resztę kolumn na poziomie ostatniej linii tekstu
+$pdf->Cell(25, $row_height, $quantity, 1, 0, 'C', true);
+$pdf->Cell(35, $row_height, number_format($unit_price, 2, '.', ''), 1, 0, 'C', true);
+$pdf->Cell(30, $row_height, number_format($total, 2, '.', ''), 1, 1, 'C', true);
+
+$pdf->Ln(5);
+
+// Separator
+$pdf->SetDrawColor(180, 180, 180);
+$pdf->Line(10, $pdf->GetY(), 200, $pdf->GetY());
+$pdf->Ln(3);
+
+// Razem
+$pdf->SetFont('freesans','B',11);
+// $pdf->SetTextColor(255, 100, 0);
+$pdf->Cell(140, 7, 'RAZEM DO ZAPŁATY:', 0, 0, 'R');
+$pdf->SetFont('freesans','B',12);
+$pdf->Cell(30, 7, number_format($total, 2, '.', '') . ' PLN', 0, 1, 'R');
+
+$pdf->Ln(8);
+
+// Adnotacja VAT
+$pdf->SetFont('freesans','I',8);
+$pdf->SetTextColor(180, 180, 180);
+$pdf->MultiCell(140, 8, "Sprzedawca korzysta ze zwolnienia podmiotowego z VAT.\nPodstawa: art. 113 ust. 1 i 9 ustawy o VAT.",  1, 'L', true);
 
 // Wysyła PDF do przeglądarki
-$pdf->Output("Faktura_$new_invoice_number.pdf", 'I');
+$pdf->Output("Faktura_".$invoice_number_formatted.".pdf", 'I');
 ?>

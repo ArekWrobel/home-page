@@ -138,9 +138,25 @@
       <label for="buyer_address">Adres nabywcy:
         <input type="text" name="buyer_address" id="buyer_address" />
       </label>
-      <label for="service">Nazwa usługi:
+      <!-- <label for="service">Nazwa usługi:
         <input type="text" name="service" id="service" required />
+      </label> -->
+      <label for="service">Nazwa usługi:
+        <input type="text" id="service" name="service" autocomplete="off" required />
+        <div id="service-list" class="dropdown-list" style="display:none; position:absolute; background:#232323; color:#fff; border:1px solid #ff6400; max-height:140px; overflow-y:auto; width:calc(100% - 2px); z-index:1000;"></div>
       </label>
+      
+      <!-- <label for="service">Nazwa usługi:
+        <input list="services" name="service" id="service" required />
+        <datalist id="services">
+          <option value="Nauka angielskiego kompetencje miękkie ( coaching )">
+          <option value="Usługa konsultacji wellness online ">
+          <option value="Konsultacja dotycząca budowania zdrowych nawyków">
+          <option value="Przygotowanie indywidualnego planu treningowego">
+          <option value="Konsultacja dietetyczna online">
+          <option value="Konsultacja psychoedukacyjna online">
+        </datalist>
+      </label> -->
       <label for="quantity">Ilość:
         <input type="number" name="quantity" id="quantity" min="1" value="1" required />
       </label>
@@ -214,6 +230,73 @@
           .catch(err => console.log('Błąd rejestracji SW', err));
       });
     }
+  </script>
+  <script>
+    // Ustaw domyślną datę na dzisiaj
+    document.addEventListener('DOMContentLoaded', () => {
+      const dateInput = document.getElementById('issue_date');
+      if (dateInput) {
+        dateInput.valueAsDate = new Date();
+      }
+  
+      // Odczyt query parametru test i dodanie jako hidden
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('test')) {
+        const testValue = params.get('test');
+  
+        // Utwórz element hidden, jeśli jeszcze nie istnieje
+        let hiddenField = document.querySelector('input[name="test"]');
+        if (!hiddenField) {
+          hiddenField = document.createElement('input');
+          hiddenField.type = 'hidden';
+          hiddenField.name = 'document_number';
+          hiddenField.value = '1';
+          document.getElementById('invoiceForm').appendChild(hiddenField);
+        }
+  
+        // Ustaw wartość
+        hiddenField.value = testValue;
+      }
+    });
+  </script>
+  <script>
+    const services = [
+      "Nauka angielskiego kompetencje miękkie ( coaching )",
+      "Usługa konsultacji wellness online ",
+      "Konsultacja dotycząca budowania zdrowych nawyków",
+      "Przygotowanie indywidualnego planu treningowego",
+      "Konsultacja dietetyczna online",
+      "Konsultacja psychoedukacyjna online"
+];
+const input = document.getElementById('service');
+const list = document.getElementById('service-list');
+
+input.addEventListener('input', () => {
+  const val = input.value.toLowerCase();
+  list.innerHTML = '';
+  if (!val) { list.style.display = 'none'; return; }
+  const filtered = services.filter(item => item.toLowerCase().includes(val));
+  if (filtered.length === 0) { list.style.display = 'none'; return; }
+  filtered.forEach(item => {
+    const div = document.createElement('div');
+    div.textContent = item;
+    div.style.padding = '6px 10px';
+    div.style.cursor = 'pointer';
+    div.addEventListener('click', () => {
+      input.value = item;
+      list.style.display = 'none';
+    });
+    list.appendChild(div);
+  });
+  list.style.display = 'block';
+});
+
+document.addEventListener('click', (e) => {
+  if (!input.contains(e.target) && !list.contains(e.target)) {
+    list.style.display = 'none';
+  }
+});
+
   </script>
 </body>
 </html>
