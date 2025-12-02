@@ -95,6 +95,29 @@
       color: var(--primary-color);
       border-radius: 5px;
     }
+    .limit-widget {
+      background: #151515;
+      border: 1px solid var(--primary-color);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.3rem;
+      box-shadow: 0 2px 8px rgba(255, 100, 0, 0.15);
+    }
+    .limit-widget h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+      color: var(--primary-color);
+    }
+    .limit-widget p {
+      margin: 0.35rem 0;
+      font-size: 0.95rem;
+      color: #f5f5f5;
+    }
+    .limit-widget .highlight {
+      font-weight: 700;
+      color: var(--primary-color);
+    }
     .btn-main {
       display: block;
       width: 100%;
@@ -164,6 +187,11 @@
         <input type="number" step="0.01" name="unit_price" id="unit_price" required />
       </label>
       <div class="total-preview" id="totalPreview">Razem: 0.00 PLN</div>
+      <div class="limit-widget" aria-live="polite">
+        <h2>Limity faktur</h2>
+        <p id="monthlyTotal">Trwa pobieranie danych o fakturach w tym miesiącu...</p>
+        <p id="quarterLimit">Sprawdzanie limitu kwartalnego...</p>
+      </div>
       <button class="btn-main" type="submit">Generuj PDF</button>
     </form>
   </div>
@@ -243,7 +271,7 @@
       const params = new URLSearchParams(window.location.search);
       if (params.has('test')) {
         const testValue = params.get('test');
-  
+
         // Utwórz element hidden, jeśli jeszcze nie istnieje
         let hiddenField = document.querySelector('input[name="test"]');
         if (!hiddenField) {
@@ -253,10 +281,13 @@
           hiddenField.value = '1';
           document.getElementById('invoiceForm').appendChild(hiddenField);
         }
-  
+
         // Ustaw wartość
         hiddenField.value = testValue;
       }
+
+      // Pobierz dane o limitach faktur
+      fetchInvoiceLimits();
     });
   </script>
   <script>
@@ -296,6 +327,47 @@ document.addEventListener('click', (e) => {
     list.style.display = 'none';
   }
 });
+
+function formatPln(value) {
+  return new Intl.NumberFormat('pl-PL', {
+    style: 'currency',
+    currency: 'PLN',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value || 0);
+}
+
+function updateLimitMessages(data) {
+  const monthlyTotalEl = document.getElementById('monthlyTotal');
+  const quarterLimitEl = document.getElementById('quarterLimit');
+
+  if (!data || data.error) {
+    monthlyTotalEl.textContent = 'Nie udało się pobrać danych o fakturach.';
+    quarterLimitEl.textContent = data?.error || 'Spróbuj ponownie później.';
+    return;
+  }
+
+  const issuedThisMonth = formatPln(data.monthly_total);
+  const remainingQuarter = formatPln(data.quarter_remaining);
+  const quarterLimit = formatPln(data.quarter_limit);
+
+  monthlyTotalEl.innerHTML = `W tym miesiącu wystawiłeś faktury na kwotę <span class="highlight">${issuedThisMonth}</span>`;
+  quarterLimitEl.innerHTML = `Pozostały limit na bieżący kwartał: <span class="highlight">${remainingQuarter}</span> / ${quarterLimit}`;
+}
+
+function fetchInvoiceLimits() {
+  fetch('invoice_summary.php')
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Response not OK');
+      }
+      return response.json();
+    })
+    .then(updateLimitMessages)
+    .catch(() => {
+      updateLimitMessages({ error: 'Nie można połączyć się z serwerem.' });
+    });
+}
 
   </script>
 </body>
