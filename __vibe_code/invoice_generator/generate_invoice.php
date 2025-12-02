@@ -11,6 +11,7 @@ if (isset($_POST['document_number'])) {
     $new_invoice_number = intval($_POST['document_number']);
     // Pobierz dane z formularza
     $invoice_number_formatted = "TEST/{$new_invoice_number}/1/1900";
+    $invoice_number_filename = "EZ_{$new_invoice_number}_1_1900"; 
     $data = $_POST;
 } else {
     // Dane do połączenia pobrane z pliku np. data.json
@@ -55,7 +56,8 @@ if (isset($_POST['document_number'])) {
         $month = $date_obj->format('m');
         $year = $date_obj->format('Y');
 
-        $invoice_number_formatted = "EZ/{$new_invoice_number}/{$month}/{$year}"; 
+        $invoice_number_formatted = "EZ/{$new_invoice_number}/{$month}/{$year}";
+        $invoice_number_filename = "EZ_{$new_invoice_number}_{$month}_{$year}"; 
         // Anonimizacja danych osobowych
         $seller_name_hash = isset($data['seller']) ? hashData($data['seller']) : null;
         $seller_address_hash = !empty($data['seller_address']) ? hashData($data['seller_address']) : null;
@@ -209,5 +211,5 @@ $pdf->SetTextColor(180, 180, 180);
 $pdf->MultiCell(140, 8, "Sprzedawca korzysta ze zwolnienia podmiotowego z VAT.\nPodstawa: art. 113 ust. 1 i 9 ustawy o VAT.",  1, 'L', true);
 
 // Wysyła PDF do przeglądarki
-$pdf->Output("Faktura_".$invoice_number_formatted.".pdf", 'I');
+$pdf->Output("Faktura_".$invoice_number_filename.".pdf", 'I');
 ?>
