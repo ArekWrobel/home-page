@@ -161,6 +161,8 @@ nav ul li a:hover {
   border-radius: 4px;
   margin-top: 10px;
   transition: background-color 0.3s ease;
+  display: inline-block;
+  text-decoration: none;
 }
 
 .button:hover {
@@ -236,6 +238,8 @@ footer a {
   align-self: flex-start; /* Align to the left of the container */
   margin-top: auto; /* Push the button to the bottom */
   transition: background-color 0.3s ease;
+  display: inline-block;
+  text-decoration: none;
 }
 
 .button:hover {
